@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;600;700&family=Saira:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  
+  :root{
+  --bg: #f6f4f1;
+  --text: #0c0c0c;
+  --muted: #666;
+  --card-radius: 18px;
+  --ease: cubic-bezier(.22,.98,.42,.99);
+}
+
+/* GLOBAL DEFAULT = SAIRA (PAGE CONTENT) */
+html, body {
+  font-family: 'Saira', sans-serif !important;
+}
+
+/* NAVBAR + MENU = ARIMO */
+header,
+header *:not(input),
+nav,
+nav * {
+  font-family: 'Arimo', sans-serif !important;
+}
+
+
+  html,body {
+    height:100%;
+    margin:0;
+  
+    background: linear-gradient(180deg,#f8f6f2 0%, #f3f2ee 100%);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+
+  .page {
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .navbar {
+    height:72px;
+    display:flex;
+    align-items:center;
+    padding:0 28px;
+    gap:20px;
+  }
+
+  /* HERO SECTION */
+  .hero {
+    position:relative;
+    padding: 28px 28px 64px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+    overflow:hidden;
+  }
+
+  /* HERO BACKGROUND */
+  .hero-bg {
+    position:absolute;
+    inset:0;
+    background:url('images/8.jpg') center/cover no-repeat;
+    z-index:0;
+  }
+
+  .hero-overlay {
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.35);
+    backdrop-filter: blur(2px);
+    z-index:1;
+  }
+
+  .hero > .relative {
+    position:relative;
+    z-index:2;
+  }
+
+  .eyebrow {
+    background: linear-gradient(90deg,#ffe6b8, #ffd7df);
+    padding:6px 10px;
+    border-radius:999px;
+    font-size:13px;
+    display:inline-block;
+    color:#563e27;
+    font-weight:600;
+  }
+
+  .hero h1 {
+    margin-top:18px;
+    font-size: clamp(28px, 6vw, 56px);
+    line-height:1.02;
+    text-align:center;
+    font-weight:800;
+    letter-spacing:-0.02em;
+    color:#fff;
+    max-width:1000px;
+    text-shadow:0 4px 18px rgba(0,0,0,0.4);
+  }
+
+  .hero p.lead {
+    margin:0;
+    color:rgba(255,255,255,0.85);
+    max-width:760px;
+    text-align:center;
+    font-size: clamp(14px, 1.6vw, 18px);
+  }
+
+  /* SINGLE CTA BUTTON */
+  .explore-btn {
+    padding:14px 28px;
+    font-size:17px;
+    background:#ff6f61;
+    border-radius:999px;
+    border:none;
+    color:#fff;
+    cursor:pointer;
+    font-weight:700;
+    box-shadow:0 10px 28px rgba(0,0,0,0.25);
+    transition:all .35s var(--ease);
+  }
+
+  .explore-btn:hover {
+    transform:translateY(-3px);
+    box-shadow:0 16px 34px rgba(0,0,0,0.32);
+  }
+
+  /* CARD STRIP WRAPPER */
+  .strip-wrap {
+    width:100%;
+    max-width:1200px;
+    margin-top:22px;
+    position:relative;
+    touch-action: pan-y;
+    user-select:none;
+  }
+
+  .strip-viewport {
+    overflow: visible;
+    position:relative;
+    padding:0;
+    background:none;
+    box-shadow:none;
+    border-radius:0;
+  }
+
+  .card-row {
+    display:flex;
+    gap: 26px;
+    align-items:center;
+    will-change: transform;
+    padding: 0;
+  }
+
+  /* CARD – NO FIXED HEIGHT (JS controls height) */
+  .card {
+    width:180px;               /* base width, JS will scale */
+    border-radius:18px;
+    overflow:hidden;
+    flex: 0 0 auto;
+    background:#eee;
+    box-shadow:0 12px 28px rgba(0,0,0,0.25);
+    transform-origin: center center;
+    transition: box-shadow 300ms var(--ease);
+    position:relative;
+    backface-visibility:hidden;
+  }
+
+  .card img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+  /* Center highlight – only box-shadow (no transform here, JS handles transform) */
+  .card--active {
+    box-shadow: 0 26px 60px rgba(10,10,10,0.45);
+  }
+
+  .cta-row {
+    margin-top:18px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .btn {
+    padding:12px 18px;
+    border-radius:999px;
+    background:#ff6f61;
+    color:white;
+    border:none;
+    font-weight:700;
+    cursor:pointer;
+    transition: transform 420ms var(--ease), box-shadow 420ms var(--ease), opacity 240ms var(--ease);
+  }
+
+  .btn.secondary {
+    background:transparent;
+    border:1px solid rgba(12,12,12,0.06);
+    color:var(--text);
+    padding:10px 16px;
+    font-weight:600;
+  }
+
+  .controls {
+    position:absolute;
+    right:18px;
+    bottom:20px;
+    display:flex;
+    gap:8px;
+  }
+
+  @media (max-width:900px){
+    .card-row { gap:18px; }
+  }
+
+  @media (max-width:520px){
+    .strip-viewport { padding:14px; }
+    .hero { padding-bottom: 48px; }
+  }
+
+  .dragging {
+    cursor: grabbing !important;
+    cursor: -webkit-grabbing !important;
+  }
+</style>
+</head>
+<body>
+
+<!-- ----------------- TOP NAV ----------------- -->
+<header class="w-full bg-white shadow-sm">
+  <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
+
+    <!-- LOGO -->
+    <img src="logo.png" alt="Logo" class=" h-18 w-24">
+
+    <!-- SEARCH BAR -->
+    <div class="flex-1 max-w-2xl">
+      <div class="flex items-center bg-white border rounded-full px-5 py-3 shadow-sm">
+        <input type="text" placeholder="Search entire store here..."
+               class="flex-1 outline-none text-gray-600">
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             fill="none" viewBox="0 0 24 24" stroke-width="2"
+             stroke="currentColor" class="w-5 h-5 text-gray-500">
+          <path stroke-linecap="round" stroke-linejoin="round"
+                d="m21 21-4.35-4.35M18 11a7 7 0 1 1-14 0 7 
+                   7 0 0 1 14 0Z" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- RIGHT ICON GROUP -->
+    <div class="flex items-center gap-6 text-gray-800">
+
+      <!-- WhatsApp -->
+      <div class="flex items-center gap-2">
+  <!-- WhatsApp Icon -->
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" 
+       class="w-10 h-10 text-green-500">
+    <path fill="currentColor" d="M380.9 97.1C339-9.8 223.8-36.7 127.5 21.3 31.1 79.3 4.2 194.5 62.2 290.9l-39.4 118A24 24 0 0 0 46 448a23.8 23.8 0 0 0 7.6-1.2l115.7-38.3c93.4 49.1 207.8 15.3 256.8-78.1 49-93.4 15.2-207.8-78.2-256.8zM222.5 362c-34.1 0-67.5-9.3-96.5-27l-6.9-4.1-69 22.8 22.5-67.3-4.5-7A166.1 166.1 0 1 1 222.5 362zm97.1-124.8c-5.3-2.6-31.2-15.4-36-17.2s-8.4-2.6-12 2.6-13.8 17.2-16.9 20.7-6.2 3.9-11.5 1.3-22.4-8.3-42.7-26.5c-15.8-14.1-26.5-31.4-29.6-36.7s-.3-8.2 2.3-10.8c2.4-2.4 5.3-6.2 7.9-9.3s3.5-5.3 5.3-8.8.9-6.6-.4-9.3-12-29-16.3-39.7c-4.2-10.7-8.6-9.2-12-9.4l-10.3-.2c-3.5 0-9.3 1.3-14.2 6.6s-18.7 18.3-18.7 44.6 19.2 51.8 21.9 55.4 37.8 57.8 91.5 81c34 14.7 47.3 16 64.3 13.5 10.3-1.5 31.2-12.8 35.6-25.1s4.4-23.1 3.1-25.3-4.9-3.9-10.2-6.6z"/>
+  </svg>
+
+  <span class="font-medium">+918512014000</span>
+</div>
+
+
+      <!-- Facebook -->
+      <a href="#" class="hover:text-blue-600 transition-colors">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="w-6 h-6 fill-current">
+    <path d="M279.14 288l14.22-92.66h-88.91V127.09c0-25.35 12.42-50.06 52.24-50.06H295V6.26S271.05 0 248.36 0c-73.22 0-121 44.38-121 124.72v70.62H56v92.66h71.36V512h100.2V288z"/>
+  </svg>
+</a>
+
+
+      <!-- Instagram -->
+      <a href="#" class="hover:text-pink-600 transition-colors">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-6 h-6 fill-current">
+    <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 
+             114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 
+             189.6c-41.2 0-74.7-33.5-74.7-74.7s33.5-74.7 
+             74.7-74.7 74.7 33.5 74.7 74.7-33.5 74.7-74.7 
+             74.7zm146.4-194.3c0 14.9-12 26.9-26.9 
+             26.9s-26.9-12-26.9-26.9 12-26.9 
+             26.9-26.9 26.9 12 26.9 26.9zM398.8 
+             80c-20.8-20.8-54.7-20.8-75.5 
+             0L80 323.2c-20.8 20.8-20.8 54.7 
+             0 75.5l243.2 243.2c20.8 20.8 54.7 
+             20.8 75.5 0l243.2-243.2c20.8-20.8 
+             20.8-54.7 0-75.5L398.8 80z"/>
+  </svg>
+</a>
+
+
+      <!-- LinkedIn -->
+      <a href="#" class="hover:text-blue-700 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>
+        </svg>
+      </a>
+
+      <!-- Twitter -->
+      <a href="#" class="hover:text-blue-400 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6">
+          <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2s9 5 20 5a9.5 9.5 0 00-9-5.5c4.75 2.25 7-7 7-7a10.6 10.6 0 01-9-5.5z"/>
+        </svg>
+      </a>
+
+    </div>
+  </div>
+
+ <!-- ----------------- MENU BAR ----------------- -->
+<nav class="w-full bg-[#800000] text-white text-lg font-medium">
+  <ul class="flex items-center justify-center gap-6 px-4 py-3 overflow-x-auto whitespace-nowrap">
+
+    <li>
+      <a href="index.html" class="hover:underline cursor-pointer">Home</a>
+    </li>
+
+    <li>
+      <a href="about.html" class="hover:underline cursor-pointer">About us</a>
+    </li>
+
+    <li>
+      <a href="product.html" class="hover:underline cursor-pointer">Product</a>
+    </li>
+
+    <li>
+      <a href="gallery.html" class="hover:underline cursor-pointer">Gallery</a>
+    </li>
+
+    <li>
+      <a href="contact.html" class="hover:underline cursor-pointer">Contact us</a>
+    </li>
+
+  </ul>
+</nav>
+
+
+</header>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// HEADER ANIMATION
+gsap.from("header", {
+  y: -40,
+  opacity: 0,
+  duration: 0.9,
+  ease: "power3.out"
+});
+
+// LOGO
+gsap.from("header img", {
+  x: -20,
+  opacity: 0,
+  duration: 0.8,
+  delay: 0.2,
+  ease: "power2.out"
+});
+
+// SEARCH BAR
+gsap.from("header .flex-1", {
+  opacity: 0,
+  y: 20,
+  duration: 0.8,
+  delay: 0.3,
+  ease: "power2.out"
+});
+
+// RIGHT ICON GROUP
+gsap.from("header .flex.items-center.gap-6 > *", {
+  opacity: 0,
+  y: -10,
+  duration: 0.7,
+  delay: 0.35,
+  stagger: 0.08,
+  ease: "power2.out"
+});
+
+// MENU BAR
+gsap.from("nav ul li", {
+  opacity: 0,
+  y: 10,
+  stagger: 0.05,
+  duration: 0.6,
+  delay: 0.4,
+  ease: "power1.out"
+});
+</script>
+
+<div class="page">
+
+  <main class="hero relative" role="main">
+
+    <!-- Background Image -->
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+
+    <div class="relative z-10 flex flex-col items-center text-center px-4">
+
+      <div class="eyebrow">Trusted by 10,000+ Businesses</div>
+
+      <h1 id="title">Premium Box & Tape Packaging for Every Industry</h1>
+
+      
+
+      
+
+      <!-- Card Slider -->
+      <div class="strip-wrap mt-10" id="stripWrap" aria-hidden="false">
+        <div class="strip-viewport" id="stripViewport">
+          <div class="card-row" id="cardRow">
+
+            <!-- Your product images (unchanged) -->
+            <div class="card"><img src="images/1 (2).jpg"></div>
+            <div class="card"><img src="images/9.jpg"></div>
+            <div class="card"><img src="images/7.jpg"></div>
+            <div class="card"><img src="images/2 (2).jpg"></div>
+            <div class="card"><img src="images/3 (2).jpg"></div>
+            <div class="card"><img src="images/4 (2).jpg"></div>
+            <div class="card"><img src="images/6.jpg"></div>
+            <div class="card"><img src="images/5 (2).jpg"></div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+</div>
+<script>
+/* ----------------------------------------
+   AUTO Infinite Convex Slider (No Drag)
+----------------------------------------- */
+
+const row = document.getElementById('cardRow');
+const viewport = document.getElementById('stripViewport');
+let cards = Array.from(row.children);
+
+/* Duplicate cards for infinite scrolling */
+const originalCards = [...cards];
+for (let i = 0; i < 2; i++) {
+  originalCards.forEach(c => row.appendChild(c.cloneNode(true)));
+}
+cards = Array.from(row.children);
+
+/* Variables */
+let rowX = 0;
+let loopWidth = 0;
+const SPEED = 2.0// Auto sliding speed
+
+/* Compute layout width */
+function computeLayout() {
+  const gap = parseFloat(getComputedStyle(row).gap || 26);
+  let setWidth = 0;
+
+  originalCards.forEach(c => {
+    setWidth += c.getBoundingClientRect().width + gap;
+  });
+  setWidth -= gap;
+
+  loopWidth = setWidth;
+
+  // Start at first copy so slider is centered immediately
+  rowX = -loopWidth;
+  row.style.transform = `translateX(${rowX}px)`;
+
+  requestAnimationFrame(updateCardTransforms);
+}
+
+window.onload = () => {
+  computeLayout();
+  autoSlide();
+};
+
+window.addEventListener("resize", () => setTimeout(computeLayout, 150));
+
+/* Looping mechanism */
+function applyLooping() {
+  if (rowX <= -loopWidth * 2) rowX += loopWidth;
+  if (rowX >= 0) rowX -= loopWidth;
+}
+
+/* Auto slide loop */
+function autoSlide() {
+  rowX -= SPEED;
+  applyLooping();
+  row.style.transform = `translateX(${rowX}px)`;
+  updateCardTransforms();
+  requestAnimationFrame(autoSlide);
+}
+autoSlide();
+
+/* Convex transform */
+function updateCardTransforms() {
+  const rect = viewport.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+
+  const maxHeight = 280;
+  const minHeight = 120;
+  const baseWidth = 180;
+  const maxWidthShrink = 0.30;
+
+  cards.forEach(card => {
+    const cr = card.getBoundingClientRect();
+    const cardCenter = cr.left + cr.width / 2;
+    const dx = cardCenter - centerX;
+    const nx = dx / rect.width;
+
+    const dist = Math.min(1, Math.abs(nx) * 1.4);
+    const curve = Math.pow(dist, 1.5);
+
+    const translateY = -curve * 46 * Math.sign(nx);
+    const rotateX = -curve * 14 * Math.sign(nx);
+    const height = maxHeight - (maxHeight - minHeight) * dist;
+    const width = baseWidth * (1 - dist * maxWidthShrink);
+    const depthScale = 1 - dist * 0.1;
+
+    card.style.height = height + "px";
+    card.style.width = width + "px";
+    card.style.transform =
+  `perspective(1000px)
+   translateY(${translateY}px)
+   rotateX(${rotateX}deg)
+   translateZ(0)
+   scale(${depthScale})`;
+
+    if (Math.abs(dx) < (cr.width * 0.6))
+      card.classList.add("card--active");
+    else
+      card.classList.remove("card--active");
+  });
+}
+
+/* Disable drag completely */
+cards.forEach(c => {
+  c.style.pointerEvents = "none";
+  c.addEventListener("dragstart", e => e.preventDefault());
+});
+viewport.style.pointerEvents = "none";
+</script>
+<section class="bg-white py-16 px-6 md:px-16">
+  <div class="max-w-6xl mx-auto text-black p-0 md:p-0">
+
+    <!-- TOP SECTION -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+
+      <!-- LEFT TEXT -->
+      <div>
+        <h2 class="text-4xl font-bold mb-5 about-title">About US</h2>
+        <p class="text-gray-700 leading-relaxed mb-6 about-text">
+          Led ask possible mistress relation elegance eat likewise debating. 
+          By message or am nothing amongst chiefly address. The its enable direct men 
+          depended highly. Ham windows sixteen who inquiry fortune demands. 
+          Be so upon sang fond must shew. Really boy law county she unable her sister.
+        </p>
+
+        <a href="#" class="text-red-600 font-semibold active-link hover:underline">EXPLORE MORE</a>
+      </div>
+
+      <!-- RIGHT STATS -->
+      <div class="space-y-4">
+
+        <!-- BOX 1 -->
+        <div class="bg-black p-5 rounded-lg flex justify-between items-center about-stat text-white">
+          <div>
+            <h3 class="text-2xl font-bold">15+</h3>
+            <p class="text-sm text-gray-300">YEARS OF EXPERIENCE</p>
+          </div>
+        </div>
+
+        <!-- BOX 2 -->
+        <div class="bg-black p-5 rounded-lg flex justify-between items-center text-white">
+          <div>
+            <h3 class="text-2xl font-bold">95</h3>
+            <p class="text-sm text-gray-300">INTERNATIONAL STORES</p>
+          </div>
+          
+        </div>
+
+        <!-- BOX 3 (Red Highlight) -->
+        <div class="bg-red-600 p-5 rounded-lg flex justify-between items-center text-white">
+          <div>
+            <h3 class="text-2xl font-bold">1M+</h3>
+            <p class="text-sm">HAPPY CUSTOMERS</p>
+          </div>
+
+          <button class="bg-black/30 px-4 py-2 rounded-md text-white text-sm hover:bg-black/50 transition">
+            VIEW
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- GALLERY -->
+    <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+      <img src="images/1 (2).jpg" class="rounded-md object-cover about-img h-40 w-full" />
+      <img src="images/4 (2).jpg" class="rounded-md object-cover about-img h-40 w-full" />
+      <img src="images/9.jpg" class="rounded-md object-cover about-img h-40 w-full" />
+    </div>
+
+  </div>
+</section>
+
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ================================
+   MAIN CONTAINER FADE + LIFT
+================================ */
+gsap.from(".about-container", {
+  scrollTrigger: {
+    trigger: ".about-container",
+    start: "top 85%",
+    toggleActions: "play none none none"
+  },
+  opacity: 0,
+  y: 60,
+  duration: 1.2,
+  ease: "power3.out"
+});
+
+/* ================================
+   TITLE REVEAL
+================================ */
+gsap.from(".about-title", {
+  scrollTrigger: {
+    trigger: ".about-title",
+    start: "top 90%",
+  },
+  opacity: 0,
+  x: -50,
+  duration: 1,
+  delay: 0.2,
+  ease: "power3.out"
+});
+
+/* ================================
+   TEXT REVEAL (fade-up)
+================================ */
+gsap.from(".about-text", {
+  scrollTrigger: {
+    trigger: ".about-text",
+    start: "top 95%",
+  },
+  opacity: 0,
+  y: 30,
+  duration: 1,
+  delay: 0.3,
+  ease: "power2.out"
+});
+
+/* ================================
+   LINK FADE-IN
+================================ */
+gsap.from(".about-link", {
+  scrollTrigger: {
+    trigger: ".about-title",
+    start: "top 90%",
+  },
+  opacity: 0,
+  duration: 0.8,
+  delay: 0.4,
+  ease: "power2.out"
+});
+
+/* ================================
+   EACH STAT BOX SLIDE + STAGGER
+================================ */
+gsap.from(".about-stat", {
+  scrollTrigger: {
+    trigger: ".about-stat",
+    start: "top 95%",
+  },
+  opacity: 0,
+  x: 50,
+  duration: 1,
+  stagger: 0.2,
+  delay: 0.4,
+  ease: "power3.out"
+});
+
+/* ================================
+   GALLERY IMAGE SCALE-IN
+================================ */
+gsap.from(".about-img", {
+  scrollTrigger: {
+    trigger: ".about-img",
+    start: "top 95%",
+  },
+  opacity: 0,
+  scale: 0.8,
+  duration: 1,
+  stagger: 0.2,
+  ease: "power3.out"
+});
+</script>
+
+<section class="py-16 px-6 md:px-16 bg-white">
+
+  <h2 class="text-4xl font-bold text-center mb-12">Our Products</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+
+    <!-- PRODUCT CARD 1 -->
+    <div class="group rounded-lg overflow-hidden product-card shadow-lg bg-white">
+
+      <!-- IMAGE WRAPPER -->
+      <div class="relative overflow-hidden">
+        <img src="images/1 (2).jpg" 
+             class="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-105">
+
+        <!-- RED OVERLAY -->
+        <div class="absolute inset-0 bg-red-600/40 opacity-0 group-hover:opacity-100 
+                    transition duration-500"></div>
+      </div>
+
+      <!-- CONTENT -->
+      <div class="p-6 border-t">
+        <div class="flex justify-between items-center">
+
+          <h3 class="text-2xl font-semibold">GoBox®</h3>
+
+          <!-- ARROW -->
+          <div class="w-10 h-10 border border-gray-500 rounded-full 
+                      flex items-center justify-center text-gray-700 
+                      text-xl group-hover:bg-red-600 group-hover:text-white 
+                      transition duration-300">
+            ↗
+          </div>
+
+        </div>
+
+        <p class="mt-4 text-gray-600 leading-relaxed">
+          Customers can check orders, view inventory levels, and track updates
+          from any device with complete ease.
+        </p>
+      </div>
+
+    </div>
+
+
+    <!-- PRODUCT CARD 2 -->
+    <div class="group rounded-lg overflow-hidden product-card shadow-lg bg-white">
+
+      <!-- IMAGE WRAPPER -->
+      <div class="relative overflow-hidden">
+        <img src="images/2 (2).jpg" 
+             class="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-105">
+
+        <!-- RED OVERLAY -->
+        <div class="absolute inset-0 bg-red-600/40 opacity-0 group-hover:opacity-100 
+                    transition duration-500"></div>
+      </div>
+
+      <!-- CONTENT -->
+      <div class="p-6 border-t">
+        <div class="flex justify-between items-center">
+
+          <h3 class="text-2xl font-semibold">SIOC: Bag in Box</h3>
+
+          <!-- ARROW -->
+          <div class="w-10 h-10 border border-gray-500 rounded-full 
+                      flex items-center justify-center text-gray-700 
+                      text-xl group-hover:bg-red-600 group-hover:text-white 
+                      transition duration-300">
+            ↗
+          </div>
+
+        </div>
+
+        <p class="mt-4 text-gray-600 leading-relaxed">
+          Sustainable alternative packaging designed to strengthen your
+          eCommerce supply chain.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// Animate each product card
+gsap.from(".product-card", {
+  scrollTrigger: {
+    trigger: ".product-card",
+    start: "top 85%",
+    toggleActions: "play none none none"
+  },
+  opacity: 0,
+  y: 60,
+  duration: 1.1,
+  stagger: 0.2,
+  ease: "power3.out"
+});
+</script>
+
+<!-- FOOTER SECTION -->
+<!-- FOOTER SECTION -->
+<footer class="bg-black text-white pt-16">
+
+  <!-- TOP ROW -->
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 px-6 items-start">
+
+    <!-- LEFT LOGO + TEXT -->
+    <div class="text-left md:text-center flex flex-col items-center space-y-5">
+      
+      <!-- Logo -->
+      <img src="logo.png" class="h-20 mx-auto" alt="">
+
+      <!-- Description -->
+      <p class="text-gray-200 text-sm leading-relaxed max-w-xs text-center">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+        Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+      </p>
+
+      <!-- Social Icons -->
+      <div class="flex justify-center gap-4 mt-3">
+
+        <!-- Facebook -->
+        <a href="#" class="w-9 h-9 bg-[#800000] rounded-full flex items-center justify-center text-white text-lg">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+
+        <!-- Twitter -->
+        <a href="#" class="w-9 h-9 bg-[#800000] rounded-full flex items-center justify-center text-white text-lg">
+          <i class="fab fa-twitter"></i>
+        </a>
+
+        <!-- YouTube -->
+        <a href="#" class="w-9 h-9 bg-[#800000] rounded-full flex items-center justify-center text-white text-lg">
+          <i class="fab fa-youtube"></i>
+        </a>
+
+      </div>
+
+    </div>
+
+    <!-- ABOUT US -->
+    <div class="space-y-3">
+      <h3 class="text-xl font-semibold">About Us</h3>
+      <ul class="space-y-2 text-gray-300 text-sm">
+        <li>About Us</li>
+        <li>Blog</li>
+        <li>Contact</li>
+        <li>What we do</li>
+        <li>Get Involved</li>
+      </ul>
+    </div>
+
+    <!-- USEFUL LINKS -->
+    <div class="space-y-3">
+      <h3 class="text-xl font-semibold">Useful Links</h3>
+      <ul class="space-y-2 text-gray-300 text-sm">
+        <li>About Us</li>
+        <li>Blog</li>
+        <li>Contact</li>
+        <li>What we do</li>
+        <li>Get Involved</li>
+      </ul>
+    </div>
+
+    <!-- CONTACT INFO -->
+    <div class="space-y-3">
+      <h3 class="text-xl font-semibold">Contact Info</h3>
+
+      <ul class="text-gray-300 text-sm space-y-3">
+        <li class="flex items-center gap-2">
+          <i class="fas fa-map-marker-alt text-red-500"></i>
+          Bain & Company, United States
+        </li>
+
+        <li class="flex items-center gap-2">
+          <i class="fas fa-phone-alt text-green-500"></i>
+          +333 - 999 - 02583
+        </li>
+
+        <li class="flex items-center gap-2">
+          <i class="fas fa-envelope text-yellow-400"></i>
+          contact@yourname.com
+        </li>
+
+        <li class="flex items-center gap-2">
+          <i class="fas fa-clock text-blue-400"></i>
+          Office Hours: 8AM - 11PM
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- COPYRIGHT STRIP -->
+  <div class="bg-black text-center py-4 mt-10 text-sm text-white opacity-90">
+    © 2025 SA Coro Pack. All Rights Reserved. Developed DW Innovation Pvt. Ltd.
+  </div>
+
+</footer>
+
+<!-- Font Awesome (Icons) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+
+
+
+</body>
+</html>

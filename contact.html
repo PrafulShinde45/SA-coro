@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | SA Coro Pack</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;600;700&family=Saira:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #f6f4f1;
+      --text: #0c0c0c;
+      --muted: #666;
+      --card-radius: 18px;
+      --ease: cubic-bezier(.22,.98,.42,.99);
+    }
+
+    /* GLOBAL DEFAULT = SAIRA (PAGE CONTENT) */
+    html, body {
+      font-family: 'Saira', sans-serif !important;
+    }
+
+    /* NAVBAR + MENU = ARIMO */
+    header, header *:not(input), nav, nav * {
+      font-family: 'Arimo', sans-serif !important;
+    }
+
+    html,body {
+      height:100%; margin:0;
+      background: linear-gradient(180deg,#f8f6f2 0%, #f3f2ee 100%);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+    }
+
+    .page { min-height:100vh; display:flex; flex-direction:column; }
+
+    .navbar { height:72px; display:flex; align-items:center; padding:0 28px; gap:20px; }
+
+    /* CONTACT HERO */
+    .contact-hero {
+      position: relative;
+      min-height: 120vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 28px;
+      overflow: hidden;
+    }
+
+    .contact-bg {
+      position: absolute;
+      inset: 0;
+      background: url('images/8.jpg') center/cover no-repeat;
+      z-index: 0;
+    }
+
+    .contact-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(3px);
+      z-index: 1;
+    }
+
+    .contact-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    @media (max-width: 868px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    .form-input {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.2);   /* changed */
+  background: rgba(255,255,255,0.8);   /* changed */
+  color: #000;                         /* changed */
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.form-input::placeholder {
+  color: rgba(0,0,0,0.5);               /* changed */
+}
+
+.form-input:focus {
+  border-color: #800000;
+  background: white;                    /* changed */
+  box-shadow: 0 0 0 3px rgba(128,0,0,0.25);
+}
+
+    .submit-btn {
+      background: #ff6f61;
+      color: white;
+      padding: 14px 32px;
+      border-radius: 999px;
+      border: none;
+      font-weight: 700;
+      font-size: 17px;
+      cursor: pointer;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.3);
+      transition: all 0.35s var(--ease);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.4);
+    }
+
+    .info-card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 18px;
+      padding: 28px;
+      color: black;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .info-item svg {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      margin-top: 4px;
+      color: #ff6f61;
+    }
+    .contact-content {
+  padding: 120px 24px; 
+}
+
+
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- ====================== SAME NAVBAR ====================== -->
+  <header class="w-full bg-white shadow-sm">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <img src="logo.png" alt="Logo" class="h-18 w-24">
+      <div class="flex-1 max-w-2xl">
+        <div class="flex items-center bg-white border rounded-full px-5 py-3 shadow-sm">
+          <input type="text" placeholder="Search entire store here..." class="flex-1 outline-none text-gray-600">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-gray-500">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35M18 11a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+          </svg>
+        </div>
+      </div>
+      <div class="flex items-center gap-6 text-gray-800">
+        <div class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-10 h-10 text-green-500">
+            <path fill="currentColor" d="M380.9 97.1C339-9.8 223.8-36.7 127.5 21.3 31.1 79.3 4.2 194.5 62.2 290.9l-39.4 118A24 24 0 0 0 46 448a23.8 23.8 0 0 0 7.6-1.2l115.7-38.3c93.4 49.1 207.8 15.3 256.8-78.1 49-93.4 15.2-207.8-78.2-256.8zM222.5 362c-34.1 0-67.5-9.3-96.5-27l-6.9-4.1-69 22.8 22.5-67.3-4.5-7A166.1 166.1 0 1 1 222.5 362zm97.1-124.8c-5.3-2.6-31.2-15.4-36-17.2s-8.4-2.6-12 2.6-13.8 17.2-16.9 20.7-6.2 3.9-11.5 1.3-22.4-8.3-42.7-26.5c-15.8-14.1-26.5-31.4-29.6-36.7s-.3-8.2 2.3-10.8c2.4-2.4 5.3-6.2 7.9-9.3s3.5-5.3 5.3-8.8.9-6.6-.4-9.3-12-29-16.3-39.7c-4.2-10.7-8.6-9.2-12-9.4l-10.3-.2c-3.5 0-9.3 1.3-14.2 6.6s-18.7 18.3-18.7 44.6 19.2 51.8 21.9 55.4 37.8 57.8 91.5 81c34 14.7 47.3 16 64.3 13.5 10.3-1.5 31.2-12.8 35.6-25.1s4.4-23.1 3.1-25.3-4.9-3.9-10.2-6.6z"/>
+          </svg>
+          <span class="font-medium">+918512014000</span>
+        </div>
+        <a href="#" class="hover:text-blue-600 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="w-6 h-6 fill-current"><path d="M279.14 288l14.22-92.66h-88.91V127.09c0-25.35 12.42-50.06 52.24-50.06H295V6.26S271.05 0 248.36 0c-73.22 0-121 44.38-121 124.72v70.62H56v92.66h71.36V512h100.2V288z"/></svg>
+        </a>
+        <a href="#" class="hover:text-pink-600 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-6 h-6 fill-current"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.2 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.5 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.9-26.9 26.9s-26.9-12-26.9-26.9 12-26.9 26.9-26.9 26.9 12 26.9 26.9zM398.8 80c-20.8-20.8-54.7-20.8-75.5 0L80 323.2c-20.8 20.8-20.8 54.7 0 75.5l243.2 243.2c20.8 20.8 54.7 20.8 75.5 0l243.2-243.2c20.8-20.8 20.8-54.7 0-75.5L398.8 80z"/></svg>
+        </a>
+        <a href="#" class="hover:text-blue-700 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
+        </a>
+        <a href="#" class="hover:text-blue-400 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2s9 5 20 5a9.5 9.5 0 00-9-5.5c4.75 2.25 7-7 7-7a10.6 10.6 0 01-9-5.5z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- MENU BAR -->
+    <nav class="w-full bg-[#800000] text-white text-lg font-medium">
+      <ul class="flex items-center justify-center gap-6 px-4 py-3 overflow-x-auto whitespace-nowrap">
+       <li>
+      <a href="index.html" class="hover:underline cursor-pointer">Home</a>
+    </li>
+        <li class="hover:underline cursor-pointer">About us</li>
+        <li class="hover:underline cursor-pointer">Product</li>
+        <li class="hover:underline cursor-pointer">Gallery</li>
+        <li class="hover:underline cursor-pointer font-bold">Contact us</li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ====================== CONTACT HERO SECTION ====================== -->
+  <section class="contact-hero pt-24 pb-24">
+  <div class="contact-bg"></div>
+  <div class="contact-overlay"></div>
+
+  <div class="contact-content text-black"> <!-- CHANGED to text-black -->
+    <div class="text-center mb-12">
+      <h1 class="text-5xl md:text-6xl font-bold leading-tight text-white">
+        Get In Touch
+      </h1>
+      <p class="mt-4 text-xl text-white opacity-90">
+        We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+      </p>
+    </div>
+
+    <div class="contact-grid">
+
+      <!-- Contact Form -->
+      <div class="bg-white p-8 rounded-xl shadow-xl"> <!-- WHITE BOX -->
+        <form class="space-y-5 text-black">
+          <input type="text" placeholder="Your Name" class="form-input" required>
+          <input type="email" placeholder="Your Email" class="form-input" required>
+          <input type="text" placeholder="Subject" class="form-input">
+          <textarea rows="6" placeholder="Your Message" class="form-input resize-none" required></textarea>
+
+          <button type="submit" class="submit-btn bg-[#800000] hover:bg-red-700 text-white">
+            Send Message
+          </button>
+        </form>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="bg-white p-8 rounded-xl shadow-xl text-black"> <!-- WHITE BOX -->
+        <div class="space-y-6 info-card">
+
+          <h3 class="text-2xl font-bold mb-6">Contact Information</h3>
+
+          <div class="info-item flex gap-4 items-start">
+            <svg fill="currentColor" class="w-7 h-7 text-[#800000]" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <div>
+              <p class="font-semibold">Address</p>
+              <p class="opacity-80">
+                Bain & Company, United States<br>
+                123 Packaging Street, Industrial Area<br>NY 10001
+              </p>
+            </div>
+          </div>
+
+          <div class="info-item flex gap-4 items-start">
+            <svg fill="currentColor" class="w-7 h-7 text-[#800000]" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            <div>
+              <p class="font-semibold">Phone</p>
+              <p class="opacity-80">+91 85120 14000 (India)<br>+1 333-999-02583 (USA)</p>
+            </div>
+          </div>
+
+          <div class="info-item flex gap-4 items-start">
+            <svg fill="currentColor" class="w-7 h-7 text-[#800000]" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <div>
+              <p class="font-semibold">Email</p>
+              <p class="opacity-80">contact@sacoropack.com<br>support@sacoropack.com</p>
+            </div>
+          </div>
+
+          <div class="info-item flex gap-4 items-start">
+            <svg fill="currentColor" class="w-7 h-7 text-[#800000]" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <div>
+              <p class="font-semibold">Office Hours</p>
+              <p class="opacity-80">Mon–Sat: 8AM – 8PM<br>Sunday: Closed</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="py-16 bg-white">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <!-- HEADLINE -->
+    <div class="text-center mb-10">
+      <h2 class="text-4xl font-bold text-[#800000]">Find Us on the Map</h2>
+      <p class="text-gray-600 mt-2">Locate our office easily using the map below.</p>
+    </div>
+
+    <!-- MAP CONTAINER -->
+    <div class="rounded-xl overflow-hidden shadow-lg border">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.7907181177634!2d73.96849377496108!3d18.447808982631706!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2e9463d533fb3%3A0x3bdf8aae2c9b8bb7!2sLAXMAN%20WAJAN%20KATA!5e0!3m2!1sen!2sin!4v1763787945811!5m2!1sen!2sin"
+        width="100%"
+        height="450"
+        style="border:0;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+
+  </div>
+</section>
+
+  <!-- ====================== SAME FOOTER ====================== -->
+  <footer class="bg-black text-white pt-16 mt-auto">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 px-6 items-start">
+      <div class="text-left md:text-center flex flex-col items-center space-y-5">
+        <img src="logo.png" class="h-20 mx-auto" alt="SA Coro Pack">
+        <p class="text-gray-200 text-sm leading-relaxed max-w-xs text-center">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+        </p>
+        <div class="flex justify-center gap-4 mt-3">
+          <a href="#" class="w-9 h-9 bg-[#800000] rounded-full flex items-center justify-center text-white text-lg"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="w-9 h-9 bg-[#800000] rounded-full flex items-center justify-center text-white text-lg"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="w-9 h-9 bg-[#800000] rounded-full flex items-center justify-center text-white text-lg"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="space-y-3">
+        <h3 class="text-xl font-semibold">About Us</h3>
+        <ul class="space-y-2 text-gray-300 text-sm">
+          <li>About Us</li><li>Blog</li><li>Contact</li><li>What we do</li><li>Get Involved</li>
+        </ul>
+      </div>
+      <div class="space-y-3">
+        <h3 class="text-xl font-semibold">Useful Links</h3>
+        <ul class="space-y-2 text-gray-300 text-sm">
+          <li>About Us</li><li>Blog</li><li>Contact</li><li>What we do</li><li>Get Involved</li>
+        </ul>
+      </div>
+      <div class="space-y-3">
+        <h3 class="text-xl font-semibold">Contact Info</h3>
+        <ul class="text-gray-300 text-sm space-y-3">
+          <li class="flex items-center gap-2"><i class="fas fa-map-marker-alt text-red-500"></i> Bain & Company, United States</li>
+          <li class="flex items-center gap-2"><i class="fas fa-phone-alt text-green-500"></i> +333 - 999 - 02583</li>
+          <li class="flex items-center gap-2"><i class="fas fa-envelope text-yellow-400"></i> contact@yourname.com</li>
+          <li class="flex items-center gap-2"><i class="fas fa-clock text-blue-400"></i> Office Hours: 8AM - 11PM</li>
+        </ul>
+      </div>
+    </div>
+    <div class="bg-black text-center py-4 mt-10 text-sm text-white opacity-90">
+      © 2025 SA Coro Pack. All Rights Reserved. Developed DW Innovation Pvt. Ltd.
+    </div>
+  </footer>
+
+  <!-- Font Awesome for icons -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+
+  <!-- Simple GSAP entrance animation -->
+  <script>
+    gsap.from("header", { y: -40, opacity: 0, duration: 0.9, ease: "power3.out" });
+    gsap.from("nav", { y: -20, opacity: 0, duration: 0.8, delay: 0.3, ease: "power3.out" });
+    gsap.from(".contact-content > *", {
+      scrollTrigger: { trigger: ".contact-hero", start: "top 80%" },
+      y: 60, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out"
+    });
+  </script>
+</body>
+</html>
