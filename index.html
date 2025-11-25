@@ -10,6 +10,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;600;700&family=Saira:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -117,7 +118,7 @@
       text-align: left;
       font-weight: 800;
       letter-spacing: -0.02em;
-      color: #dc2626;
+      color: #800000;
       max-width: 820px;
       text-shadow: none;
     }
@@ -128,6 +129,18 @@
       max-width: 720px;
       text-align: left;
       font-size: clamp(16px, 1.8vw, 20px);
+    }
+
+    .headline {
+      font-family: 'Permanent Marker', cursive;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      color: #800000;
+      font-weight: 700;
+      -webkit-text-stroke: 0.8px rgba(128,0,0,0.25);
+      text-shadow: 0 1px 0 rgba(128,0,0,0.2);
+      display: block;
+      width: 100%;
     }
 
     /* SINGLE CTA BUTTON */
@@ -397,12 +410,9 @@
 
         <!-- LEFT TEXT -->
         <div>
-          <h2 class="text-4xl font-bold mb-5 about-title">About US</h2>
+          <h2 class="text-4xl font-bold mb-5 about-title headline">About US</h2>
           <p class="text-gray-700 leading-relaxed mb-6 about-text">
-            Led ask possible mistress relation elegance eat likewise debating.
-            By message or am nothing amongst chiefly address. The its enable direct men
-            depended highly. Ham windows sixteen who inquiry fortune demands.
-            Be so upon sang fond must shew. Really boy law county she unable her sister.
+            SA Coro Pack delivers premium corrugated boxes, tapes, and custom packaging built for reliability, sustainability, and brand impact. We engineer solutions to your specifications—from eCommerce shippers to industrial cartons and retail displays—using recyclable materials, optimized board grades, and fast lead times across Pune and neighboring regions to reduce damages, improve fulfillment, and elevate the unboxing experience.
           </p>
 
           <a href="#" class="text-red-600 font-semibold active-link hover:underline">EXPLORE MORE</a>
@@ -457,7 +467,7 @@
   <section class="bg-white py-16 px-6 md:px-16">
     <div class="max-w-7xl mx-auto">
       <p class="uppercase tracking-widest text-xs text-[#800000] font-semibold">Features at a glance</p>
-      <h2 class="mt-3 text-4xl md:text-5xl font-bold">Reliable. Renewable. Customizable.</h2>
+      <h2 class="mt-3 text-4xl md:text-5xl font-bold headline">Reliable. Renewable. Customizable.</h2>
 
       <div class="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div class="flex items-stretch rounded-lg border border-neutral-200 bg-neutral-100">
@@ -620,7 +630,7 @@
 
   <section class="bg-white py-16 px-6 md:px-16">
     <div class="max-w-7xl mx-auto">
-      <h2 class="text-3xl md:text-4xl font-bold text-[#800000] mb-10">Industries We Serve</h2>
+      <h2 class="text-3xl md:text-4xl font-bold mb-10 headline">Industries We Serve</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 divide-x divide-neutral-200">
         <a href="#" class="group relative block overflow-hidden shadow-sm">
           <img src="images/1 (2).jpg"
@@ -702,7 +712,7 @@
 
   <section class="py-16 px-6 md:px-16 bg-white">
 
-    <h2 class="text-4xl font-bold text-center mb-12">Our Products</h2>
+    <h2 class="headline text-4xl font-bold text-center mx-auto mb-12">Our Products</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
 
@@ -786,6 +796,29 @@
     <a href="product.html" class="inline-flex items-center rounded-full bg-red-600 text-white px-6 py-3 font-semibold hover:bg-red-700">View All Products</a>
   </div>
   </section>
+
+  <!-- Testimonials Slider -->
+  <section class="py-20 px-6">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold text-center mx-auto headline">What Our Customers Say</h2>
+      <div class="mt-8 mx-auto aspect-[2/1] max-w-md w-full rounded-xl border border-neutral-200 bg-white p-8 shadow">
+        <div id="testimonialCard" class="transition-opacity duration-300">
+          <p class="text-neutral-800 text-xl md:text-2xl leading-relaxed">SA Coro Pack helped us cut damages and improve delivery consistency.</p>
+          <div class="mt-4 text-sm text-neutral-600">— Operations Lead, D2C Brand</div>
+        </div>
+      </div>
+      <div class="mt-8 flex justify-center gap-4">
+        <button id="tPrev" class="w-12 h-12 rounded-full border border-neutral-300 flex items-center justify-center hover:bg-neutral-100">‹</button>
+        <button id="tNext" class="w-12 h-12 rounded-full border border-neutral-300 flex items-center justify-center hover:bg-neutral-100">›</button>
+      </div>
+    </div>
+  </section>
+  <script>(function(){const items=[
+    {q:'SA Coro Pack helped us cut damages and improve delivery consistency.',by:'Operations Lead, D2C Brand'},
+    {q:'Excellent print quality and strong corrugates for our retail shipments.',by:'Packaging Manager, FMCG'},
+    {q:'Fast turnaround times and reliable support across locations.',by:'Supply Head, Pharma'},
+    {q:'Custom sizes and finishes made our unboxing experience stand out.',by:'Brand Team, Electronics'}
+  ];let i=0;const card=document.getElementById('testimonialCard');function render(){if(!card)return;card.style.opacity=0;setTimeout(()=>{card.querySelector('p').textContent=items[i].q;card.querySelector('div').textContent='— '+items[i].by;card.style.opacity=1;},180);}document.getElementById('tNext')?.addEventListener('click',()=>{i=(i+1)%items.length;render();});document.getElementById('tPrev')?.addEventListener('click',()=>{i=(i-1+items.length)%items.length;render();});setInterval(()=>{i=(i+1)%items.length;render();},4000);})();</script>
 
   <section class="py-16 px-6">
     <div class="max-w-7xl mx-auto">
