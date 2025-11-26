@@ -10,7 +10,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;600;700&family=Saira:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+
 
   <style>
     :root {
@@ -131,28 +131,8 @@
       font-size: clamp(16px, 1.8vw, 20px);
     }
 
-    .headline {
-      font-family: 'Permanent Marker', cursive;
-      text-transform: uppercase;
-      letter-spacing: 0.01em;
-      color: #000000;
-      font-weight: 700;
-      -webkit-text-stroke: 0.8px rgba(0,0,0,0.25);
-      text-shadow: 0 1px 0 rgba(0,0,0,0.2);
-      display: block;
-      width: 100%;
-    }
-    .headline-light {
-      font-family: 'Permanent Marker', cursive;
-      text-transform: uppercase;
-      letter-spacing: 0.01em;
-      color: #ffffff;
-      font-weight: 700;
-      -webkit-text-stroke: 0.8px rgba(255,255,255,0.25);
-      text-shadow: 0 1px 0 rgba(255,255,255,0.2);
-      display: block;
-      width: 100%;
-    }
+    .headline { display: block; width: 100%; color: inherit; font-family: inherit; letter-spacing: normal; text-transform: none; text-shadow: none; }
+    .headline-light { display: block; width: 100%; color: inherit; font-family: inherit; letter-spacing: normal; text-transform: none; text-shadow: none; }
 
     /* SINGLE CTA BUTTON */
     .explore-btn {
@@ -283,17 +263,56 @@
       cursor: grabbing !important;
       cursor: -webkit-grabbing !important;
     }
+    /* Intro Loader Styles */
+    #loader{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;color:#fff;background:linear-gradient(135deg,#003366,#0077b6,#006d77,#009e60,#ffb703,#fb8500);background-size:500% 500%;animation:gradientShift 8s ease infinite}
+    @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    .watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:.06;width:85%;pointer-events:none;z-index:1}
+    .loader-logo{max-width:200px;margin-bottom:20px;z-index:2;animation:logoBounce 1.5s ease-out forwards,pulseGlow 2.5s infinite alternate}
+    @keyframes logoBounce{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}
+    @keyframes pulseGlow{0%{filter:drop-shadow(0 0 5px rgba(255,183,3,.5))}100%{filter:drop-shadow(0 0 20px rgba(255,183,3,.9))}}
+    .ring{position:absolute;width:280px;height:280px;border:3px solid rgba(255,255,255,.15);border-top:3px solid #ffb703;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);animation:spin 4s linear infinite;z-index:0;box-shadow:0 0 25px rgba(255,183,3,.4)}
+    @keyframes spin{100%{transform:translate(-50%,-50%) rotate(360deg)}}
+    .slogan{font-size:24px;font-weight:700;margin-bottom:16px;letter-spacing:1px;background:linear-gradient(90deg,#fff,#ffb703,#fff);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 3s linear infinite,fadeInUp 1.5s ease-out .5s forwards;opacity:0;z-index:2;line-height:1.3;text-transform:uppercase}
+    @keyframes shimmer{to{background-position:200% center}}
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    #loader ul{list-style:none;padding:0;margin:0;font-size:16px;font-weight:600;z-index:2;line-height:1.8}
+    #loader ul li{opacity:0;transform:translateY(20px);animation:fadeInUp 1s ease-out forwards;color:#fff}
+    #loader ul li:nth-child(1){animation-delay:1s}
+    #loader ul li:nth-child(2){animation-delay:1.2s}
+    #loader ul li:nth-child(3){animation-delay:1.4s}
+    #loader ul li:nth-child(4){animation-delay:1.6s}
+    #loader ul li:nth-child(5){animation-delay:1.8s}
   </style>
 </head>
 
 <body>
+
+  <!-- Intro Loader -->
+  <section id="loader" aria-label="Intro Loader">
+    <img src="logo.png" alt="SA Coro Watermark" class="watermark" />
+    <div class="ring"></div>
+    <img src="logo.png" alt="SA Coro Logo" class="loader-logo" />
+    <h1 class="slogan">Powering Reliable Packaging</h1>
+    <ul>
+      <li>Corrugated Boxes</li>
+      <li>Industrial Tapes</li>
+      <li>Custom Packaging</li>
+      <li>Retail Displays</li>
+      <li>Fulfillment Support</li>
+    </ul>
+  </section>
+  <script>
+    window.addEventListener('load',()=>{
+      setTimeout(()=>{const l=document.getElementById('loader');if(!l)return;l.style.transition='all 1.2s ease';l.style.transform='translateY(-100%)';l.style.opacity='0';setTimeout(()=>l.style.display='none',1200);},2000);
+    });
+  </script>
 
   <!-- ----------------- TOP NAV ----------------- -->
   <header class="sticky top-0 z-50 bg-white shadow-sm border-b border-neutral-200/60">
     <div class="max-w-7xl mx-auto px-6">
       <div class="flex h-16 items-center justify-between">
         <a href="index.html" class="flex items-center gap-3">
-          <img src="logo.png" alt="SA Coro Pack" class="h-14 w-auto">
+          <img src="logo1.png" alt="SA Coro Pack" class="h-14 w-auto">
           <span class="sr-only">SA Coro Pack</span>
         </a>
         <nav class="hidden md:flex items-center gap-10 lg:gap-12 text-base lg:text-lg font-semibold">
@@ -421,7 +440,7 @@
 
         <!-- LEFT TEXT -->
         <div>
-          <h2 class="text-4xl font-bold mb-5 about-title headline">About US</h2>
+          <h2 class="text-4xl font-bold mb-5 about-title">About US</h2>
           <p class="text-gray-700 leading-relaxed mb-6 about-text">
             SA Coro Pack delivers premium corrugated boxes, tapes, and custom packaging built for reliability, sustainability, and brand impact. We engineer solutions to your specifications—from eCommerce shippers to industrial cartons and retail displays—using recyclable materials, optimized board grades, and fast lead times across Pune and neighboring regions to reduce damages, improve fulfillment, and elevate the unboxing experience.
           </p>
@@ -478,7 +497,7 @@
   <section class="bg-white py-16 px-6 md:px-16">
     <div class="max-w-7xl mx-auto">
       <p class="uppercase tracking-widest text-xs text-[#800000] font-semibold">Features at a glance</p>
-      <h2 class="mt-3 text-4xl md:text-5xl font-bold headline">Reliable. Renewable. Customizable.</h2>
+      <h2 class="mt-3 text-4xl md:text-5xl font-bold">Reliable. Renewable. Customizable.</h2>
 
       <div class="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div class="flex items-stretch rounded-lg border border-neutral-200 bg-neutral-100">
@@ -641,7 +660,7 @@
 
   <section class="bg-white py-16 px-6 md:px-16">
     <div class="max-w-7xl mx-auto">
-      <h2 class="text-3xl md:text-4xl font-bold mb-10 headline">Industries We Serve</h2>
+      <h2 class="text-3xl md:text-4xl font-bold mb-10">Industries We Serve</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 divide-x divide-neutral-200">
         <a href="#" class="group relative block overflow-hidden shadow-sm">
           <img src="images/1 (2).jpg"
@@ -723,7 +742,7 @@
 
   <section class="py-16 px-6 md:px-16 bg-white">
 
-    <h2 class="headline text-4xl font-bold text-center mx-auto mb-12">Our Products</h2>
+    <h2 class="text-4xl font-bold text-center mx-auto mb-12">Our Products</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
 
@@ -810,7 +829,7 @@
 
   <section class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-6 text-center">
-      <h2 class="headline text-4xl md:text-5xl font-bold">Testimonials</h2>
+      <h2 class="text-4xl md:text-5xl font-bold">Testimonials</h2>
       <p class="mt-3 text-black">Discover how SA Coro Pack empowers brands with reliable, sustainable packaging.</p>
       <div id="ts-container" class="relative mt-10 overflow-hidden">
         <div id="ts-track" class="flex justify-center gap-6 md:gap-8 transition-transform duration-500 ease-out">
