@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;600;700&family=Saira:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --brand:#800000 }
+    html,body{font-family:'Saira',sans-serif;background:linear-gradient(180deg,#f8f6f2 0%,#f3f2ee 100%);color:#0c0c0c}
+    header,header *:not(input),nav,nav *{font-family:'Arimo',sans-serif}
+    .cat-title{color:#800000}
+    .cat-link{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;background:#f5f5f5;border:1px solid rgba(0,0,0,.08);border-radius:12px;transition:.25s ease}
+    .cat-link:hover{background:#efefef;box-shadow:0 8px 20px rgba(0,0,0,.08)}
+    .cat-link::after{content:"▾";color:#800000;opacity:.7;transition:.2s ease}
+    .cat-link.open::after{transform:rotate(180deg)}
+    .dd-panel{margin:8px 0 0 0;padding:8px 10px;border-left:2px solid #eee}
+    .dd-panel a{display:block;padding:6px 8px;border-radius:8px;color:#333}
+    .dd-panel a:hover{background:#f0f0f0}
+    .card{border:1px solid rgba(0,0,0,.08)}
+    .card:hover{transform:translateY(-4px);box-shadow:0 16px 30px rgba(0,0,0,.12)}
+    .card-glossy{background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,255,255,1));box-shadow:0 10px 24px rgba(0,0,0,.08)}
+  </style>
+</head>
+<body>
+  <header class="sticky top-0 z-50 bg-white shadow-sm border-b border-neutral-200/60">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex h-16 items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3">
+          <img src="logo1.png" alt="SA Coro Pack" class="h-14 w-auto">
+          <span class="sr-only">SA Coro Pack</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-10 lg:gap-12 text-base lg:text-lg font-semibold">
+          <a href="index.html" class="hover:text-red-600 transition-colors">Home</a>
+          <a href="about.html" class="hover:text-red-600 transition-colors">About</a>
+          <a href="product.html" class="text-red-600">Product</a>
+          <a href="gallery.html" class="hover:text-red-600 transition-colors">Gallery</a>
+          <a href="contact.html" class="hover:text-red-600 transition-colors">Contact</a>
+        </nav>
+        <div class="hidden md:flex items-center">
+          <div class="flex items-center w-64 lg:w-80 rounded-full border border-neutral-300/70 bg-white px-3 py-2 shadow-sm focus-within:ring-2 focus-within:ring-red-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-neutral-500 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="7" /><path d="M21 21l-4.35-4.35" />
+            </svg>
+            <input id="search" type="text" placeholder="Search products" class="flex-1 bg-transparent outline-none text-sm text-neutral-700">
+          </div>
+        </div>
+        <button id="navToggle" class="md:hidden inline-flex items-center justify-center rounded-md p-2 text-neutral-700 hover:bg-neutral-100" aria-label="Open menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6"><path fill="currentColor" d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z" /></svg>
+        </button>
+      </div>
+      <div id="mobileMenu" class="md:hidden hidden border-t border-neutral-200/60 py-3">
+        <div class="flex flex-col gap-4 text-base">
+          <a href="index.html" class="px-2 py-1 hover:text-red-600">Home</a>
+          <a href="about.html" class="px-2 py-1 hover:text-red-600">About</a>
+          <a href="product.html" class="px-2 py-1 hover:text-red-600">Product</a>
+          <a href="gallery.html" class="px-2 py-1 hover:text-red-600">Gallery</a>
+          <a href="contact.html" class="px-2 py-1 hover:text-red-600">Contact</a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <script>document.getElementById('navToggle')?.addEventListener('click',()=>{const m=document.getElementById('mobileMenu');if(m)m.classList.toggle('hidden');});</script>
+
+  <section class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8">
+    <aside class="bg-white rounded-2xl p-6 shadow-sm border border-neutral-200/60">
+      <h2 class="text-2xl font-bold cat-title">Categories</h2>
+      <div class="mt-6 grid gap-3">
+        <button class="cat-link cat-toggle" data-target="#dd1" data-cat="Boxes">Category 1 — Boxes</button>
+        <div id="dd1" class="dd-panel hidden"></div>
+        <button class="cat-link cat-toggle" data-target="#dd2" data-cat="Tapes">Category 2 — Tapes</button>
+        <div id="dd2" class="dd-panel hidden"></div>
+        <button class="cat-link cat-toggle" data-target="#dd3" data-cat="Rolls">Category 3 — Rolls</button>
+        <div id="dd3" class="dd-panel hidden"></div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="uppercase tracking-widest text-xs text-[var(--brand)] font-semibold">Explore</p>
+          <h1 class="text-3xl md:text-4xl font-extrabold">Products</h1>
+        </div>
+      </div>
+
+      <div id="grid" class="mt-8 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- populated via JS -->
+      </div>
+    </main>
+  </section>
+
+  <script>
+    const toSlug = s => s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$|--+/g,'-');
+    const cat1 = [
+      "Mailer Boxes","Coloured Boxes","Universal Boxes","Flat Boxes","Tuck In Boxes","Pizza Boxes",
+      "Printed Corrugated Boxes","Long Boxes","Folder Boxes","Fruit Boxes","Reverse Tuck in Boxes",
+      "Mobile phone/Laptop/ Tablet Boxes","Heavy Duty Boxes","Storage Boxes"
+    ];
+    const cat2 = [
+      "Special Tapes","Paper Tapes","Floor Marking Tape","Brown Tapes","Transparent Tapes","Printed Tapes",
+      "Cross Filament Tape","Coloured Tapes","Masking Tapes","Tissue Paper Tapes","Double Sided Tapes"
+    ];
+    const cat3 = [
+      "EPE Foam Rolls","Strapping Rolls","Stretch Wrap Rolls","Bubble Wrap","Thermal (POS) Rolls","Shrink Wrap Rolls",
+      "Honeycomb Rolls","Rolls/Wraps/Films","Corrugated Rolls","Paper Bubble Rolls","Air Cushioning Rolls",
+      "biodegradable films and rolls"
+    ];
+    const all = [
+      ...cat1.map(n=>({name:n,cat:"Boxes",img:"https://source.unsplash.com/900x700/?corrugated,box"})),
+      ...cat2.map(n=>({name:n,cat:"Tapes",img:"https://source.unsplash.com/900x700/?industrial,tape"})),
+      ...cat3.map(n=>({name:n,cat:"Rolls",img:"https://source.unsplash.com/900x700/?packaging,roll"})),
+    ];
+    const linkFor = name => `product-item.html?slug=${encodeURIComponent(toSlug(name))}`;
+
+    function fillPanel(el, arr){
+      el.innerHTML = arr.slice(0,6).map(n=>`<a href="${linkFor(n)}">${n}</a>`).join("");
+    }
+    fillPanel(document.querySelector('#dd1'), cat1);
+    fillPanel(document.querySelector('#dd2'), cat2);
+    fillPanel(document.querySelector('#dd3'), cat3);
+
+    document.querySelectorAll('.cat-toggle').forEach(btn=>{
+      btn.addEventListener('click',(e)=>{
+        e.preventDefault();
+        const panel = document.querySelector(btn.dataset.target);
+        panel.classList.toggle('hidden');
+        btn.classList.toggle('open');
+        const filtered = all.filter(p=>p.cat === btn.dataset.cat);
+        renderGrid(filtered);
+      });
+    });
+
+    const grid=document.getElementById('grid');
+    function renderGrid(items){
+      grid.innerHTML = items.map(p=>`
+        <a href="${linkFor(p.name)}" class="block rounded-[18px] overflow-hidden bg-white card card-glossy transition shadow-sm">
+          <img src="${p.img}" class="w-full h-56 object-cover rounded-t-[18px]">
+          <div class="p-4">
+            <p class="text-[var(--brand)] text-xs font-semibold uppercase">${p.cat}</p>
+            <h3 class="font-bold text-lg mt-1">${p.name}</h3>
+            <p class="text-sm text-neutral-600 mt-1">Reliable, brand‑ready packaging.</p>
+          </div>
+        </a>
+      `).join("");
+    }
+    renderGrid(all.filter(p=>p.cat==='Boxes'));
+
+    document.getElementById('search')?.addEventListener('input',e=>{
+      const q=e.target.value.toLowerCase();
+      const filtered=all.filter(p=>p.name.toLowerCase().includes(q) || p.cat.toLowerCase().includes(q));
+      renderGrid(filtered);
+    });
+
+    gsap.from('.cat-link',{opacity:0,y:8,stagger:.02,duration:.35,ease:'power2.out'});
+    gsap.from('.card',{opacity:0,y:16,stagger:.04,duration:.45,ease:'power2.out'});
+  </script>
+</body>
+</html>
