@@ -65,8 +65,25 @@
   </header>
   <script>document.getElementById('navToggle')?.addEventListener('click',()=>{const m=document.getElementById('mobileMenu');if(m)m.classList.toggle('hidden');});</script>
 
+  <section class="about-hero relative min-h-[calc((100vh-64px)*0.6)] flex items-center justify-center">
+    <div class="absolute inset-0">
+      <img src="images/Universal Boxes.jpg" class="w-full h-full object-cover" />
+    </div>
+    <div class="absolute inset-0 bg-black/50"></div>
+    <div class="relative text-center text-white px-6 max-w-3xl mx-auto content-animate">
+      <p class="uppercase tracking-widest text-sm opacity-80">Explore</p>
+      <h1 class="text-4xl md:text-6xl font-bold mt-4 leading-tight">Our Products</h1>
+      <p class="mt-6 text-lg opacity-90">Corrugated boxes, industrial tapes, and protective rolls engineered for reliable packaging.</p>
+    </div>
+  </section>
+  <script>
+    gsap.from(".about-hero img",{scale:1.15,opacity:0,duration:1.6,ease:"power3.out"});
+    gsap.from(".about-hero .bg-black\\/50",{opacity:0,duration:1.2,ease:"power2.out"});
+    gsap.from(".about-hero .content-animate > *",{y:30,opacity:0,stagger:0.15,duration:1,ease:"power3.out"});
+  </script>
+
   <section class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8">
-    <aside class="bg-white rounded-2xl p-6 shadow-sm border border-neutral-200/60">
+    <aside class="bg-white rounded-2xl p-6 shadow-sm border border-neutral-200/60 sticky top-24 h-max">
       <h2 class="text-2xl font-bold cat-title">Categories</h2>
       <div class="mt-6 grid gap-3">
         <button class="cat-link cat-toggle" data-target="#dd1" data-cat="Boxes">Category 1 — Boxes</button>
@@ -86,7 +103,7 @@
         </div>
       </div>
 
-      <div id="grid" class="mt-8 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div id="grid" class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         <!-- populated via JS -->
       </div>
     </main>
@@ -108,19 +125,68 @@
       "Honeycomb Rolls","Rolls/Wraps/Films","Corrugated Rolls","Paper Bubble Rolls","Air Cushioning Rolls",
       "biodegradable films and rolls"
     ];
+    const cat1Images = {
+      "Mailer Boxes": "images/Mailer boxes.jpg",
+      "Coloured Boxes": "images/Coloured Boxes.jpg",
+      "Universal Boxes": "images/Universal Boxes.jpg",
+      "Flat Boxes": "images/Flat Boxes.jpg",
+      "Tuck In Boxes": "images/Tuck In Boxes.jpg",
+      "Pizza Boxes": "images/Pizza boxes.jpg",
+      "Printed Corrugated Boxes": "images/Printed Corguted box.jpg",
+      "Long Boxes": "images/long boxes.jpg",
+      "Folder Boxes": "images/Folder Boxes.jpg",
+      "Fruit Boxes": "images/Fruit boxes.jpg",
+      "Reverse Tuck in Boxes": "images/Reverse Tuck In Boxes.jpg",
+      "Mobile phone/Laptop/ Tablet Boxes": "images/mobile laptop tablet boxes.jpg",
+      "Heavy Duty Boxes": "images/Heavy Duty Boxes.jpg",
+      "Storage Boxes": "images/Storage Box.jpg"
+    };
+    const cat2Images = {
+      "Special Tapes": "images/Special tapes.jpg",
+      "Paper Tapes": "images/Paper tapes.jpg",
+      "Floor Marking Tape": "images/floor marking tapes.jpg",
+      "Brown Tapes": "images/brown tapes.jpg",
+      "Transparent Tapes": "images/transparent tapes.jpg",
+      "Printed Tapes": "images/printed tapes.jpg",
+      "Cross Filament Tape": "images/cross filament tape.jpg",
+      "Coloured Tapes": "images/Coloured tapes.jpg",
+      "Masking Tapes": "images/masking tapes.jpg",
+      "Tissue Paper Tapes": "images/tissue paper tapes.jpg",
+      "Double Sided Tapes": "images/double sided tapes.jpg"
+    };
+    const cat3Images = {
+      "EPE Foam Rolls": "images/EPE Foam Rolls.jpg",
+      "Strapping Rolls": "images/strapping rolls.jpg",
+      "Stretch Wrap Rolls": "images/stretch wrap rolls.jpg",
+      "Bubble Wrap": "images/bubble wrap rolls.jpg",
+      "Thermal (POS) Rolls": "images/thermal pos rolls.jpg",
+      "Shrink Wrap Rolls": "images/shrink wrap rolls.jpg",
+      "Honeycomb Rolls": "images/honeycomb rolls.jpg",
+      "Rolls/Wraps/Films": "images/rolls wraps films.jpg",
+      "Corrugated Rolls": "images/corrugated rolls.jpg",
+      "Paper Bubble Rolls": "images/paper bubble rolls.jpg",
+      "Air Cushioning Rolls": "images/air cushioning rolls.jpg",
+      "biodegradable films and rolls": "images/stretch wrap rolls.jpg"
+    };
+    window.PRODUCT_NAMES=[...cat1,...cat2,...cat3];
     const all = [
-      ...cat1.map(n=>({name:n,cat:"Boxes",img:"https://source.unsplash.com/900x700/?corrugated,box"})),
-      ...cat2.map(n=>({name:n,cat:"Tapes",img:"https://source.unsplash.com/900x700/?industrial,tape"})),
-      ...cat3.map(n=>({name:n,cat:"Rolls",img:"https://source.unsplash.com/900x700/?packaging,roll"})),
+      ...cat1.map(n=>({name:n,cat:"Boxes",img:cat1Images[n]})),
+      ...cat2.map(n=>({name:n,cat:"Tapes",img:cat2Images[n]})),
+      ...cat3.map(n=>({name:n,cat:"Rolls",img:cat3Images[n]})),
     ];
     const linkFor = name => `product-item.html?slug=${encodeURIComponent(toSlug(name))}`;
 
-    function fillPanel(el, arr){
+    function fillPanel(el, arr, cat){
       el.innerHTML = arr.slice(0,6).map(n=>`<a href="${linkFor(n)}">${n}</a>`).join("");
     }
-    fillPanel(document.querySelector('#dd1'), cat1);
-    fillPanel(document.querySelector('#dd2'), cat2);
-    fillPanel(document.querySelector('#dd3'), cat3);
+    fillPanel(document.querySelector('#dd1'), cat1, 'Boxes');
+    fillPanel(document.querySelector('#dd2'), cat2, 'Tapes');
+    fillPanel(document.querySelector('#dd3'), cat3, 'Rolls');
+    document.addEventListener('DOMContentLoaded', ()=>{
+      document.querySelector('#dd1')?.classList.remove('hidden');
+      document.querySelector('.cat-toggle[data-target="#dd1"]')?.classList.add('open');
+      renderGrid(all.filter(p=>p.cat==='Boxes'));
+    });
 
     document.querySelectorAll('.cat-toggle').forEach(btn=>{
       btn.addEventListener('click',(e)=>{
@@ -146,7 +212,6 @@
         </a>
       `).join("");
     }
-    renderGrid(all.filter(p=>p.cat==='Boxes'));
 
     document.getElementById('search')?.addEventListener('input',e=>{
       const q=e.target.value.toLowerCase();
@@ -154,8 +219,94 @@
       renderGrid(filtered);
     });
 
+    (function(){
+      const input=document.querySelector('header input[placeholder]');
+      if(!input) return;
+      const names=window.PRODUCT_NAMES||[];
+      let bar=document.getElementById('navSuggestBar');
+      if(!bar){
+        bar=document.createElement('div');
+        bar.id='navSuggestBar';
+        bar.className='fixed top-16 left-0 right-0 z-40';
+        bar.innerHTML='<div class="max-w-7xl mx-auto px-6"><div id="navSuggestContent" class="hidden bg-white border border-neutral-200 rounded-xl shadow-lg overflow-hidden"></div></div>';
+        document.body.appendChild(bar);
+      }
+      const content=document.getElementById('navSuggestContent');
+      function render(q){
+        const list=names.filter(n=>n.toLowerCase().includes(q.toLowerCase())).slice(0,8);
+        if(!q||list.length===0){content.classList.add('hidden');content.innerHTML='';return;}
+        content.innerHTML=list.map(n=>`<a href="${linkFor(n)}" class="flex items-center justify-between px-4 py-2 hover:bg-neutral-100 text-sm text-neutral-800">${n}<span class="text-neutral-400">›</span></a>`).join('');
+        content.classList.remove('hidden');
+      }
+      input.addEventListener('input',e=>render(e.target.value));
+      document.addEventListener('click',(e)=>{if(!content.contains(e.target)&&e.target!==input)content.classList.add('hidden');});
+      input.addEventListener('keydown',(e)=>{if(e.key==='Escape')content.classList.add('hidden');});
+    })();
+
     gsap.from('.cat-link',{opacity:0,y:8,stagger:.02,duration:.35,ease:'power2.out'});
     gsap.from('.card',{opacity:0,y:16,stagger:.04,duration:.45,ease:'power2.out'});
   </script>
+
+  <footer class="bg-black text-white py-20">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 px-6 items-stretch justify-items-center md:justify-items-start text-center md:text-left">
+      <div class="footer-card bg-neutral-900/50 border border-white/10 rounded-2xl p-6 shadow-lg h-full w-full max-w-md flex flex-col items-center text-center space-y-5">
+        <img src="logo.png" class="h-20 mx-auto" alt="">
+        <p class="text-gray-200 text-sm leading-relaxed max-w-xs text-center">SA Coro Pack delivers premium corrugated boxes, tapes, and custom packaging built for reliability and brand impact.</p>
+        <div class="flex justify-center gap-4 mt-3">
+          <a href="#" class="w-9 h-9 bg-[#800000] rounded-full flex items-center justify-center text-white text-lg"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="w-9 h-9 bg-[#800000] rounded-full flex items-center justify-center text-white text-lg"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="w-9 h-9 bg-[#800000] rounded-full flex items-center justify-center text-white text-lg"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-card bg-neutral-900/50 border border-white/10 rounded-2xl p-6 shadow-lg h-full w-full max-w-md flex flex-col">
+        <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
+        <ul class="flex-1 space-y-2 text-gray-200 text-sm">
+          <li><a href="index.html" class="group flex items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-home text-white/80 group-hover:text-[#800000]"></i> Home</span><i class="fas fa-arrow-right text-white/50 group-hover:text-[#800000]"></i></a></li>
+          <li><a href="about.html" class="group flex items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-info-circle text-white/80 group-hover:text-[#800000]"></i> About</span><i class="fas fa-arrow-right text-white/50 group-hover:text-[#800000]"></i></a></li>
+          <li><a href="product.html" class="group flex items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-box-open text-white/80 group-hover:text-[#800000]"></i> Products</span><i class="fas fa-arrow-right text-white/50 group-hover:text-[#800000]"></i></a></li>
+          <li><a href="gallery.html" class="group flex items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-images text-white/80 group-hover:text-[#800000]"></i> Gallery</span><i class="fas fa-arrow-right text-white/50 group-hover:text-[#800000]"></i></a></li>
+          <li><a href="contact.html" class="group flex items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-address-card text-white/80 group-hover:text-[#800000]"></i> Contact</span><i class="fas fa-arrow-right text-white/50 group-hover:text-[#800000]"></i></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-card bg-neutral-900/60 border border-white/10 rounded-2xl p-8 shadow-xl h-full w-full max-w-lg md:justify-self-end">
+        <h3 class="text-xl font-semibold">Contact Info</h3>
+        <div class="mt-4 text-gray-200 text-sm space-y-0 divide-y divide-white/10">
+          <div class="flex items-start gap-4 py-4 first:pt-0 last:pb-0">
+            <i class="fas fa-map-marker-alt text-red-500"></i>
+            <div>
+              <p class="font-semibold">Factory & Office</p>
+              <p class="opacity-90">Sr No 158/5, Wadki - Uruli Devachi Road,<br>Near Laxman Weight Bridge, Uruli Devachi,<br>Pune - 412308.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 py-4">
+            <i class="fas fa-phone-alt text-green-500"></i>
+            <div>
+              <p class="font-semibold">Office Phone</p>
+              <p class="opacity-90"><a href="tel:02029972140" class="hover:underline">020 - 29972140</a><br><a href="tel:8805282827" class="hover:underline">8805282827</a></p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 py-4">
+            <i class="fas fa-envelope text-yellow-400"></i>
+            <div>
+              <p class="font-semibold">Email</p>
+              <p class="opacity-90"><a href="mailto:sacoropack@gmail.com" class="hover:underline">sacoropack@gmail.com</a></p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 py-4">
+            <i class="fas fa-clock text-blue-400"></i>
+            <div>
+              <p class="font-semibold">Office Hours</p>
+              <p class="opacity-90">Mon–Sat: 8AM – 8PM<br>Sunday: Closed</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-black text-center py-4 mt-10 text-sm text-white opacity-90">© 2025 SA Coro Pack. All Rights Reserved. Developed DW Innovation Pvt. Ltd.</div>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+
 </body>
 </html>
