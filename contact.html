@@ -42,12 +42,15 @@
     /* CONTACT HERO */
     .contact-hero {
       position: relative;
-      min-height: 120vh;
+      min-height: 80vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 0 28px;
-      overflow: hidden;
+      overflow: visible;
+    }
+    @media (max-width:640px){
+      .contact-hero{min-height:auto;padding:24px 16px;overflow: visible}
     }
 
     .contact-bg {
@@ -63,6 +66,7 @@
       background: rgba(0,0,0,0.55);
       backdrop-filter: blur(3px);
       z-index: 1;
+      pointer-events: none;
     }
 
     .contact-content {
@@ -76,8 +80,9 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 60px;
-      align-items: start;
+      align-items: stretch;
     }
+    .contact-grid > div { height: 100%; }
 
     @media (max-width: 868px) {
       .contact-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -139,6 +144,9 @@
       margin-bottom: 24px;
     }
 
+    .map-iframe{width:100%;height:320px;border:0}
+    @media (min-width:768px){.map-iframe{height:450px}}
+
     .info-item svg {
       width: 24px;
       height: 24px;
@@ -147,10 +155,23 @@
       color: #ff6f61;
     }
     .contact-content {
-  padding: 120px 24px; 
+  padding: 80px 24px; 
+}
+@media (min-width:768px){
+  .contact-content{padding-bottom:120px}
+}
+@media (max-width:640px){
+  .contact-content{padding:40px 16px}
 }
 
 
+    /* Contact headings and quick actions */
+    .section-title{font-size:clamp(2rem,4vw,3.5rem);font-weight:800;letter-spacing:-.02em}
+    .section-lead{font-size:clamp(.95rem,2.2vw,1.125rem)}
+    .quick-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem}
+    .qa-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.55rem 1rem;border-radius:999px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.12);color:#fff;backdrop-filter:blur(6px);transition:.25s ease}
+    .qa-btn:hover{background:rgba(255,255,255,.2)}
+    @media (max-width:640px){.quick-actions{padding:0 4px}}
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -222,19 +243,18 @@
   <div class="contact-overlay"></div>
 
   <div class="contact-content text-black"> <!-- CHANGED to text-black -->
-    <div class="text-center mb-12">
-      <h1 class="text-5xl md:text-6xl font-bold leading-tight text-white">
-        Get In Touch
-      </h1>
-      <p class="mt-4 text-xl text-white opacity-90">
-        We'd love to hear from you. Send us a message and we'll respond as soon as possible.
-      </p>
+    <div class="text-center mb-8 md:mb-12">
+      <p class="uppercase tracking-widest text-sm text-white/80">Contact</p>
+      <h1 class="section-title text-white">Get In Touch</h1>
+      <p class="mt-3 section-lead text-white/90">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
     </div>
+   
 
     <div class="contact-grid">
 
       <!-- Contact Form -->
       <div class="bg-white p-8 rounded-xl shadow-xl"> <!-- WHITE BOX -->
+        <h3 class="text-2xl font-bold mb-4 text-[#800000]">Send Us A Message</h3>
         <form class="space-y-5 text-black">
           <input type="text" placeholder="Your Name" class="form-input" required>
           <input type="email" placeholder="Your Email" class="form-input" required>
@@ -306,7 +326,7 @@
   </div>
 </section>
 
-<section class="py-16 bg-white">
+<section class="py-16 bg-white md:mt-24">
   <div class="max-w-6xl mx-auto px-6">
 
     <!-- HEADLINE -->
@@ -318,10 +338,8 @@
     <!-- MAP CONTAINER -->
     <div class="rounded-xl overflow-hidden shadow-lg border">
       <iframe
+        class="map-iframe"
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.7907181177634!2d73.96849377496108!3d18.447808982631706!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2e9463d533fb3%3A0x3bdf8aae2c9b8bb7!2sLAXMAN%20WAJAN%20KATA!5e0!3m2!1sen!2sin!4v1763787945811!5m2!1sen!2sin"
-        width="100%"
-        height="450"
-        style="border:0;"
         allowfullscreen=""
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade">
@@ -333,7 +351,7 @@
 
   <footer class="bg-black text-white py-20">
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 px-6 items-stretch justify-items-center md:justify-items-start text-center md:text-left">
-      <div class="footer-card bg-neutral-900/50 border border-white/10 rounded-2xl p-6 shadow-lg h-full w-full max-w-md flex flex-col items-center text-center space-y-5">
+      <div class="footer-card bg-neutral-900/50 border border-white/10 rounded-2xl p-6 shadow-lg h-full w-full max-w-md mx-auto flex flex-col items-center text-center space-y-5">
         <img src="logo.png" class="h-20 mx-auto" alt="">
         <p class="text-gray-200 text-sm leading-relaxed max-w-xs text-center">SA Coro Pack delivers premium corrugated boxes, tapes, and custom packaging built for reliability and brand impact.</p>
         <div class="flex justify-center gap-4 mt-3">
@@ -343,18 +361,18 @@
         </div>
       </div>
 
-      <div class="footer-card bg-neutral-900/50 border border-white/10 rounded-2xl p-6 shadow-lg h-full w-full max-w-md flex flex-col">
+      <div class="footer-card bg-neutral-900/50 border border-white/10 rounded-2xl p-6 shadow-lg h-full w-full max-w-md mx-auto flex flex-col items-center text-center md:items-start md:text-left">
         <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
         <ul class="flex-1 space-y-2 text-gray-200 text-sm">
-          <li><a href="index.html" class="group flex items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-home text-white/80 group-hover:text-[#800000]"></i> Home</span><i class="fas fa-arrow-right text-white/50 group-hover:text-[#800000]"></i></a></li>
-          <li><a href="about.html" class="group flex items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-info-circle text-white/80 group-hover:text-[#800000]"></i> About</span><i class="fas fa-arrow-right text-white/50 group-hover:text-[#800000]"></i></a></li>
-          <li><a href="product.html" class="group flex items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-box-open text-white/80 group-hover:text-[#800000]"></i> Products</span><i class="fas fa-arrow-right text-white/50 group-hover:text-[#800000]"></i></a></li>
-          <li><a href="gallery.html" class="group flex items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-images text-white/80 group-hover:text-[#800000]"></i> Gallery</span><i class="fas fa-arrow-right text-white/50 group-hover:text-[#800000]"></i></a></li>
-          <li><a href="contact.html" class="group flex items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-address-card text-white/80 group-hover:text-[#800000]"></i> Contact</span><i class="fas fa-arrow-right text-white/50 group-hover:text-[#800000]"></i></a></li>
+          <li><a href="index.html" class="group flex items-center justify-center md:justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-home text-white/80 group-hover:text-[#800000]"></i> Home</span><i class="fas fa-arrow-right text-white/50 group-hover:text-[#800000]"></i></a></li>
+          <li><a href="about.html" class="group flex items-center justify-center md:justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-info-circle text-white/80 group-hover:text-[#800000]"></i> About</span><i class="fas fa-arrow-right text-white/50 group-hover:text-[#800000]"></i></a></li>
+          <li><a href="product.html" class="group flex items-center justify-center md:justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-box-open text-white/80 group-hover:text-[#800000]"></i> Products</span><i class="fas fa-arrow-right text-white/50 group-hover:text-[#800000]"></i></a></li>
+          <li><a href="gallery.html" class="group flex items-center justify-center md:justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-images text-white/80 group-hover:text-[#800000]"></i> Gallery</span><i class="fas fa-arrow-right text-white/50 group-hover:text-[#800000]"></i></a></li>
+          <li><a href="contact.html" class="group flex items-center justify-center md:justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-address-card text-white/80 group-hover:text-[#800000]"></i> Contact</span><i class="fas fa-arrow-right text-white/50 group-hover:text-[#800000]"></i></a></li>
         </ul>
       </div>
 
-      <div class="footer-card bg-neutral-900/60 border border-white/10 rounded-2xl p-8 shadow-xl h-full w-full max-w-lg md:justify-self-end">
+      <div class="footer-card bg-neutral-900/60 border border-white/10 rounded-2xl p-8 shadow-xl h-full w-full max-w-md mx-auto md:justify-self-end flex flex-col items-center md:items-start text-center md:text-left">
         <h3 class="text-xl font-semibold">Contact Info</h3>
         <div class="mt-4 text-gray-200 text-sm space-y-0 divide-y divide-white/10">
           <div class="flex items-start gap-4 py-4 first:pt-0 last:pb-0">
@@ -388,7 +406,7 @@
         </div>
       </div>
     </div>
-    <div class="bg-black text-center py-4 mt-10 text-sm text-white opacity-90">© 2025 SA Coro Pack. All Rights Reserved. Developed DW Innovation Pvt. Ltd.</div>
+    <div class="bg-black text-center py-4 mt-10 text-sm text-white opacity-90"><div class="max-w-md mx-auto">© 2025 SA Coro Pack. All Rights Reserved. Developed DW Innovation Pvt. Ltd.</div></div>
   </footer>
 
   <!-- Font Awesome for icons -->
