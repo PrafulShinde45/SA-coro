@@ -11,7 +11,7 @@
     :root { --brand:#800000 }
     html,body{font-family:'Saira',sans-serif;background:linear-gradient(180deg,#f8f6f2 0%,#f3f2ee 100%);color:#0c0c0c}
     header,header *:not(input),nav,nav *{font-family:'Arimo',sans-serif}
-    .spotlight{position:fixed;inset:0;pointer-events:none;z-index:10;background:radial-gradient(600px circle at 0 0, rgba(128,0,0,.18), transparent 40%)}
+    .spotlight{display:none}
     .chip{border:1px solid rgba(0,0,0,.1);background:#fff;color:#0c0c0c;transition:.25s ease}
     .chip.active{background:var(--brand);color:#fff;border-color:var(--brand)}
     .g-item{transform-style:preserve-3d;will-change:transform;transition:transform .2s ease}
@@ -19,7 +19,7 @@
   </style>
 </head>
 <body>
-  <div class="spotlight"></div>
+  <!-- spotlight removed -->
   <header class="sticky top-0 z-50 bg-white shadow-sm border-b border-neutral-200/60">
     <div class="max-w-7xl mx-auto px-6">
       <div class="flex h-16 items-center justify-between">
@@ -90,9 +90,9 @@
       <p class="mt-6 text-lg opacity-90">Explore our packaging craft: corrugated boxes, industrial tapes, custom prints, and logistics in action.</p>
       <div class="mt-8 flex flex-wrap gap-3 justify-center">
         <button class="chip active px-4 py-2 rounded-full text-sm" data-filter="all">All</button>
-        <button class="chip px-4 py-2 rounded-full text-sm" data-filter="boxes">Boxes</button>
+        <button class="chip px-4 py-2 rounded-full text-sm" data-filter="boxes">Corrugated Boxes</button>
         <button class="chip px-4 py-2 rounded-full text-sm" data-filter="tapes">Tapes</button>
-        <button class="chip px-4 py-2 rounded-full text-sm" data-filter="logistics">Logistics</button>
+        <button class="chip px-4 py-2 rounded-full text-sm" data-filter="logistics"> Corrupted Rolls</button>
       </div>
     </div>
   </section>
@@ -329,7 +329,7 @@
     gsap.to('.g-caption',{opacity:1,y:0,duration:.35,ease:'power2.out',stagger:.08,scrollTrigger:{trigger:'.g-item',start:'top 80%'}})
 
     const spotlight=document.querySelector('.spotlight')
-    window.addEventListener('mousemove',e=>{spotlight.style.background=`radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(128,0,0,.18), transparent 40%)`})
+    /* spotlight disabled */
 
     document.querySelectorAll('.g-item').forEach(card=>{
       card.addEventListener('mousemove',e=>{
