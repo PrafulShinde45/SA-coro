@@ -28,9 +28,109 @@
           <a href="gallery.html" class="hover:text-red-600">Gallery</a>
           <a href="contact.html" class="hover:text-red-600">Contact</a>
         </nav>
+        <div class="hidden md:flex items-center">
+          <div class="flex items-center w-64 lg:w-80 rounded-full border border-neutral-300/70 bg-white px-3 py-2 shadow-sm focus-within:ring-2 focus-within:ring-red-500">
+            <button id="navSearchBtn" type="button" class="mr-2 text-neutral-500 hover:text-neutral-700">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.35-4.35" /></svg>
+            </button>
+            <input id="navSearch" type="text" placeholder="Search" class="flex-1 bg-transparent outline-none text-sm text-neutral-700">
+          </div>
+        </div>
+        <button id="navToggle" class="md:hidden inline-flex items-center justify-center rounded-md p-2 text-neutral-700 hover:bg-neutral-100" aria-label="Open menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6"><path fill="currentColor" d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z" /></svg>
+        </button>
       </div>
+      <div id="mobileMenu" class="md:hidden fixed top-16 left-0 h-[calc(100vh-64px)] w-72 bg-white border-r border-neutral-200/60 shadow-xl transform -translate-x-full transition-transform duration-300 z-50 hidden">
+        <div class="flex flex-col gap-4 text-base p-4">
+          <a href="index.html" class="px-2 py-2 hover:text-red-600">Home</a>
+          <a href="about.html" class="px-2 py-2 hover:text-red-600">About</a>
+          <a href="product.html" class="px-2 py-2 text-red-600">Product</a>
+          <a href="gallery.html" class="px-2 py-2 hover:text-red-600">Gallery</a>
+          <a href="contact.html" class="px-2 py-2 hover:text-red-600">Contact</a>
+        </div>
+      </div>
+      <div id="menuBackdrop" class="md:hidden fixed inset-0 bg-black/40 transition-opacity duration-300 opacity-0 hidden z-40"></div>
     </div>
   </header>
+  <script>
+    (function(){
+      const btn=document.getElementById('navToggle');
+      const menu=document.getElementById('mobileMenu');
+      const backdrop=document.getElementById('menuBackdrop');
+      function openMenu(){menu.classList.remove('hidden');backdrop.classList.remove('hidden');requestAnimationFrame(()=>{menu.classList.remove('-translate-x-full');backdrop.classList.add('opacity-100');});}
+      function closeMenu(){menu.classList.add('-translate-x-full');backdrop.classList.remove('opacity-100');setTimeout(()=>{menu.classList.add('hidden');backdrop.classList.add('hidden');},300);} 
+      btn?.addEventListener('click',(e)=>{e.stopPropagation();openMenu();});
+      backdrop?.addEventListener('click',closeMenu);
+    })();
+    (function(){
+      const s=document.getElementById('navSearch');
+      const b=document.getElementById('navSearchBtn');
+      function go(v){v=v.trim();if(v)location.href='product.html?q='+encodeURIComponent(v);} 
+      if(!s)return;
+      s.addEventListener('keydown',(e)=>{if(e.key==='Enter')go(s.value);});
+      b?.addEventListener('click',()=>go(s?.value||''));
+
+      const items=[
+        {name:"Mailer Boxes",slug:"mailer-boxes"},
+        {name:"Coloured Boxes",slug:"coloured-boxes"},
+        {name:"Universal Boxes",slug:"universal-boxes"},
+        {name:"Flat Boxes",slug:"flat-boxes"},
+        {name:"Tuck In Boxes",slug:"tuck-in-boxes"},
+        {name:"Pizza Boxes",slug:"pizza-boxes"},
+        {name:"Printed Corrugated Boxes",slug:"printed-corrugated-boxes"},
+        {name:"Long Boxes",slug:"long-boxes"},
+        {name:"Folder Boxes",slug:"folder-boxes"},
+        {name:"Fruit Boxes",slug:"fruit-boxes"},
+        {name:"Reverse Tuck in Boxes",slug:"reverse-tuck-in-boxes"},
+        {name:"Mobile/Laptop/Tablet Boxes",slug:"mobile-phone-laptop-tablet-boxes"},
+        {name:"Heavy Duty Boxes",slug:"heavy-duty-boxes"},
+        {name:"Storage Boxes",slug:"storage-boxes"},
+        {name:"Special Tapes",slug:"special-tapes"},
+        {name:"Paper Tapes",slug:"paper-tapes"},
+        {name:"Floor Marking Tape",slug:"floor-marking-tape"},
+        {name:"Brown Tapes",slug:"brown-tapes"},
+        {name:"Transparent Tapes",slug:"transparent-tapes"},
+        {name:"Printed Tapes",slug:"printed-tapes"},
+        {name:"Cross Filament Tape",slug:"cross-filament-tape"},
+        {name:"Coloured Tapes",slug:"coloured-tapes"},
+        {name:"Masking Tapes",slug:"masking-tapes"},
+        {name:"Tissue Paper Tapes",slug:"tissue-paper-tapes"},
+        {name:"Double Sided Tapes",slug:"double-sided-tapes"},
+        {name:"EPE Foam Rolls",slug:"epe-foam-rolls"},
+        {name:"Strapping Rolls",slug:"strapping-rolls"},
+        {name:"Stretch Wrap Rolls",slug:"stretch-wrap-rolls"},
+        {name:"Bubble Wrap",slug:"bubble-wrap"},
+        {name:"Thermal (POS) Rolls",slug:"thermal-pos-rolls"},
+        {name:"Shrink Wrap Rolls",slug:"shrink-wrap-rolls"},
+        {name:"Honeycomb Rolls",slug:"honeycomb-rolls"},
+        {name:"Rolls/Wraps/Films",slug:"rolls-wraps-films"},
+        {name:"Corrugated Rolls",slug:"corrugated-rolls"},
+        {name:"Paper Bubble Rolls",slug:"paper-bubble-rolls"},
+        {name:"Air Cushioning Rolls",slug:"air-cushioning-rolls"},
+        {name:"Biodegradable Films & Rolls",slug:"biodegradable-films-and-rolls"},
+      ];
+      let bar=document.getElementById('navSuggestBar');
+      if(!bar){
+        bar=document.createElement('div');
+        bar.id='navSuggestBar';
+        bar.className='fixed top-16 left-0 right-0 z-40';
+        bar.innerHTML='<div class="max-w-7xl mx-auto px-6"><div id="navSuggestContent" class="hidden bg-white border border-neutral-200 rounded-xl shadow-lg overflow-hidden"></div></div>';
+        document.body.appendChild(bar);
+      }
+      const content=document.getElementById('navSuggestContent');
+      function linkFor(slug){return `product-item.html?slug=${encodeURIComponent(slug)}`;}
+      function render(q){
+        q=q.trim();
+        const list=!q?[]:items.filter(it=>it.name.toLowerCase().includes(q.toLowerCase())).slice(0,8);
+        if(list.length===0){content.classList.add('hidden');content.innerHTML='';return;}
+        content.innerHTML=list.map(it=>`<a href="${linkFor(it.slug)}" class="flex items-center justify-between px-4 py-2 hover:bg-neutral-100 text-sm text-neutral-800">${it.name}<span class="text-neutral-400">›</span></a>`).join('');
+        content.classList.remove('hidden');
+      }
+      s.addEventListener('input',e=>render(e.target.value));
+      document.addEventListener('click',(e)=>{if(!content.contains(e.target)&&e.target!==s)content.classList.add('hidden');});
+      s.addEventListener('keydown',(e)=>{if(e.key==='Escape')content.classList.add('hidden');});
+    })();
+  </script>
 
   <section class="max-w-7xl mx-auto px-6 py-10">
     <nav class="text-sm text-neutral-600">
@@ -40,8 +140,8 @@
     </nav>
 
     <div class="grid grid-cols-1 lg:grid-cols-[520px_1fr] gap-10 mt-6">
-      <div class="rounded-2xl overflow-hidden bg-white border border-neutral-200/60">
-        <img id="heroImg" src="" class="w-full h-[380px] object-cover">
+      <div class="rounded-2xl overflow-hidden bg-white border border-neutral-200/60 h-[380px]">
+        <img id="heroImg" src="" class="block w-full h-full object-cover">
       </div>
       <div>
         <p id="catTag" class="text-xs uppercase font-semibold text-[var(--brand)]">Category</p>
@@ -196,9 +296,129 @@
       document.getElementById('specs').innerHTML=item.specs.map(s=>`<li>${s}</li>`).join("");
       document.getElementById('pills').innerHTML=[item.cat,item.title.split(' ')[0],"SA Coro"].map(p=>`<span class="pill">${p}</span>`).join("");
     }
+    const q=document.getElementById('quoteBtn');
+    if(q){ const subj=item?item.title:''; q.href='contact.html'+(subj?('?subject='+encodeURIComponent(subj)):''); }
 
     gsap.from('h1',{opacity:0,y:12,duration:.5});
     gsap.from('#heroImg',{opacity:0,scale:.98,duration:.6});
   </script>
+
+  <footer class="bg-black text-white py-20 block md:hidden">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 px-6 items-stretch justify-items-center md:justify-items-start text-center md:text-left">
+      <div class="footer-card bg-neutral-900/50 border border-white/10 rounded-2xl p-6 shadow-lg h-full w-full max-w-md flex flex-col items-center text-center space-y-5">
+        <img src="logo.png" class="h-20 mx-auto" alt="">
+        <p class="text-gray-200 text-sm leading-relaxed max-w-xs text-center">SA Coro Pack delivers premium corrugated boxes, tapes and custom packaging built for reliability and brand impact.</p>
+        <div class="flex justify-center gap-4 mt-3">
+          <a href="#" class="w-9 h-9 bg-[#800000] rounded-full flex items-center justify-center text-white text-lg"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="w-9 h-9 bg-[#800000] rounded-full flex items-center justify-center text-white text-lg"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="w-9 h-9 bg-[#800000] rounded-full flex items-center justify-center text-white text-lg"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-card bg-neutral-900/50 border border-white/10 rounded-2xl p-6 shadow-lg h-full w-full max-w-md flex flex-col">
+        <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
+        <ul class="flex-1 space-y-2 text-gray-200 text-sm">
+          <li><a href="index.html" class="group flex items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-home text-white/80"></i> Home</span><i class="fas fa-arrow-right text-white/50"></i></a></li>
+          <li><a href="about.html" class="group flex items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-info-circle text-white/80"></i> About</span><i class="fas fa-arrow-right text-white/50"></i></a></li>
+          <li><a href="product.html" class="group flex items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-box-open text-white/80"></i> Products</span><i class="fas fa-arrow-right text-white/50"></i></a></li>
+          <li><a href="gallery.html" class="group flex items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-images text-white/80"></i> Gallery</span><i class="fas fa-arrow-right text-white/50"></i></a></li>
+          <li><a href="contact.html" class="group flex items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-address-card text-white/80"></i> Contact</span><i class="fas fa-arrow-right text-white/50"></i></a></li>
+        </ul>
+      </div>
+      <div class="footer-card bg-neutral-900/60 border border-white/10 rounded-2xl p-8 shadow-xl h-full w-full max-w-lg md:justify-self-end flex flex-col items-center text-center md:items-start md:text-left">
+        <h3 class="text-xl font-semibold">Contact Info</h3>
+        <div class="mt-4 text-gray-200 text-sm space-y-0 divide-y divide-white/10 w-full">
+          <div class="flex items-center justify-center gap-2 py-4 first:pt-0 last:pb-0">
+            <i class="fas fa-map-marker-alt text-red-500"></i>
+            <div class="text-center md:text-left">
+              <p class="font-semibold text-center">Factory & Office</p>
+              <p class="opacity-90">Sr No 158/5, Wadki - Uruli Devachi Road,<br>Near Laxman Weight Bridge, Uruli Devachi,<br>Pune - 412308.</p>
+            </div>
+          </div>
+          <div class="flex items-center justify-center gap-2 py-4">
+            <i class="fas fa-phone-alt text-green-500"></i>
+            <div class="text-center md:text-left">
+              <p class="font-semibold text-center">Office Phone</p>
+              <p class="opacity-90"><a href="tel:02029972140" class="hover:underline">020 - 29972140</a><br><a href="tel:8805282827" class="hover:underline">8805282827</a></p>
+            </div>
+          </div>
+          <div class="flex items-center justify-center gap-2 py-4">
+            <i class="fas fa-envelope text-yellow-400"></i>
+            <div class="text-center md:text-left">
+              <p class="font-semibold text-center">Email</p>
+              <p class="opacity-90"><a href="mailto:sacoropack@gmail.com" class="hover:underline">sacoropack@gmail.com</a></p>
+            </div>
+          </div>
+          <div class="flex items-center justify-center gap-2 py-4">
+            <i class="fas fa-clock text-blue-400"></i>
+            <div class="text-center md:text-left">
+              <p class="font-semibold text-center">Office Hours</p>
+              <p class="opacity-90">Mon–Sat: 8AM – 8PM<br>Sunday: Closed</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-black text-center py-4 mt-10 text-sm text-white opacity-90">© 2025 SA Coro Pack. All Rights Reserved. Developed DW Innovation Pvt. Ltd.</div>
+  </footer>
+
+  <footer class="bg-black text-white py-20 hidden md:block">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 px-6 items-stretch justify-items-center md:justify-items-start text-center md:text-left">
+      <div class="footer-card bg-neutral-900/50 border border-white/10 rounded-2xl p-6 shadow-lg h-full w-full max-w-md flex flex-col items-center text-center space-y-5">
+        <img src="logo.png" class="h-20 mx-auto" alt="">
+        <p class="text-gray-200 text-sm leading-relaxed max-w-xs text-center">SA Coro Pack delivers premium corrugated boxes, tapes and custom packaging built for reliability and brand impact.</p>
+        <div class="flex justify-center gap-4 mt-3">
+          <a href="#" class="w-9 h-9 bg-[#800000] rounded-full flex items-center justify-center text-white text-lg"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="w-9 h-9 bg-[#800000] rounded-full flex items-center justify-center text-white text-lg"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="w-9 h-9 bg-[#800000] rounded-full flex items-center justify-center text-white text-lg"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-card bg-neutral-900/50 border border-white/10 rounded-2xl p-6 shadow-lg h-full w-full max-w-md flex flex-col">
+        <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
+        <ul class="flex-1 space-y-2 text-gray-200 text-sm">
+          <li><a href="index.html" class="group flex items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-home text-white/80"></i> Home</span><i class="fas fa-arrow-right text-white/50"></i></a></li>
+          <li><a href="about.html" class="group flex items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-info-circle text-white/80"></i> About</span><i class="fas fa-arrow-right text-white/50"></i></a></li>
+          <li><a href="product.html" class="group flex items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-box-open text-white/80"></i> Products</span><i class="fas fa-arrow-right text-white/50"></i></a></li>
+          <li><a href="gallery.html" class="group flex items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-images text-white/80"></i> Gallery</span><i class="fas fa-arrow-right text-white/50"></i></a></li>
+          <li><a href="contact.html" class="group flex items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5 transition"><span class="flex items-center gap-3"><i class="fas fa-address-card text-white/80"></i> Contact</span><i class="fas fa-arrow-right text-white/50"></i></a></li>
+        </ul>
+      </div>
+      <div class="footer-card bg-neutral-900/60 border border-white/10 rounded-2xl p-8 shadow-xl h-full w-full max-w-lg md:justify-self-end">
+        <h3 class="text-xl font-semibold">Contact Info</h3>
+        <div class="mt-4 text-gray-200 text-sm space-y-0 divide-y divide-white/10">
+          <div class="flex items-start gap-4 py-4 first:pt-0 last:pb-0">
+            <i class="fas fa-map-marker-alt text-red-500"></i>
+            <div>
+              <p class="font-semibold">Factory & Office</p>
+              <p class="opacity-90">Sr No 158/5, Wadki - Uruli Devachi Road,<br>Near Laxman Weight Bridge, Uruli Devachi,<br>Pune - 412308.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 py-4">
+            <i class="fas fa-phone-alt text-green-500"></i>
+            <div>
+              <p class="font-semibold">Office Phone</p>
+              <p class="opacity-90"><a href="tel:02029972140" class="hover:underline">020 - 29972140</a><br><a href="tel:8805282827" class="hover:underline">8805282827</a></p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 py-4">
+            <i class="fas fa-envelope text-yellow-400"></i>
+            <div>
+              <p class="font-semibold">Email</p>
+              <p class="opacity-90"><a href="mailto:sacoropack@gmail.com" class="hover:underline">sacoropack@gmail.com</a></p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 py-4">
+            <i class="fas fa-clock text-blue-400"></i>
+            <div>
+              <p class="font-semibold">Office Hours</p>
+              <p class="opacity-90">Mon–Sat: 8AM – 8PM<br>Sunday: Closed</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-black text-center py-4 mt-10 text-sm text-white opacity-90">© 2025 SA Coro Pack. All Rights Reserved. Developed DW Innovation Pvt. Ltd.</div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
 </body>
 </html>
