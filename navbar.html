@@ -1,0 +1,65 @@
+<header class="sticky top-0 z-50 bg-white shadow-sm border-b border-neutral-200/60">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex h-16 items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="logo1.png" alt="SA Coro Pack" class="h-14 w-auto">
+        <span class="sr-only">SA Coro Pack</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-10 lg:gap-12 text-base lg:text-lg font-semibold">
+        <a href="index.html" class="hover:text-red-600 transition-colors">Home</a>
+        <a href="about.html" class="hover:text-red-600 transition-colors">About</a>
+        <a href="product.html" class="hover:text-red-600 transition-colors">Product</a>
+        <a href="gallery.html" class="hover:text-red-600 transition-colors">Gallery</a>
+        <a href="contact.html" class="hover:text-red-600 transition-colors">Contact</a>
+      </nav>
+      <div class="hidden md:flex items-center">
+        <div class="flex items-center w-64 lg:w-80 rounded-full border border-neutral-300/70 bg-white px-3 py-2 shadow-sm focus-within:ring-2 focus-within:ring-red-500">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-neutral-500 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="7" />
+            <path d="M21 21l-4.35-4.35" />
+          </svg>
+          <input type="text" placeholder="Search" class="flex-1 bg-transparent outline-none text-sm text-neutral-700">
+        </div>
+      </div>
+      <button id="navToggle" class="md:hidden inline-flex items-center justify-center rounded-md p-2 text-neutral-700 hover:bg-neutral-100" aria-label="Open menu">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6"><path fill="currentColor" d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z" /></svg>
+      </button>
+    </div>
+    <div id="mobileMenu" class="md:hidden fixed top-16 left-0 h-[calc(100vh-64px)] w-72 bg-white border-r border-neutral-200/60 shadow-xl transform -translate-x-full transition-transform duration-300 z-50 hidden">
+      <div class="flex flex-col gap-4 text-base p-4">
+        <a href="index.html" class="px-2 py-2 hover:text-red-600">Home</a>
+        <a href="about.html" class="px-2 py-2 hover:text-red-600">About</a>
+        <a href="product.html" class="px-2 py-2 hover:text-red-600">Product</a>
+        <a href="gallery.html" class="px-2 py-2 hover:text-red-600">Gallery</a>
+        <a href="contact.html" class="px-2 py-2 hover:text-red-600">Contact</a>
+      </div>
+    </div>
+    <div id="menuBackdrop" class="md:hidden fixed inset-0 bg-black/40 transition-opacity duration-300 opacity-0 hidden z-40"></div>
+  </div>
+</header>
+<script>
+  (function(){
+    const btn=document.getElementById('navToggle');
+    const menu=document.getElementById('mobileMenu');
+    const backdrop=document.getElementById('menuBackdrop');
+    function openMenu(){menu.classList.remove('hidden');backdrop.classList.remove('hidden');requestAnimationFrame(()=>{menu.classList.remove('-translate-x-full');backdrop.classList.add('opacity-100');});}
+    function closeMenu(){menu.classList.add('-translate-x-full');backdrop.classList.remove('opacity-100');setTimeout(()=>{menu.classList.add('hidden');backdrop.classList.add('hidden');},300);}
+    btn?.addEventListener('click',(e)=>{e.stopPropagation();openMenu();});
+    backdrop?.addEventListener('click',closeMenu);
+  })();
+  (function(){
+    const s=document.querySelector('header input[placeholder]');
+    if(!s)return;
+    s.addEventListener('keydown',(e)=>{if(e.key==='Enter'){const v=s.value.trim();if(v)location.href=`product.html?q=${encodeURIComponent(v)}`;}});
+    const toSlug=t=>t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$|--+/g,'-');
+    const names=["Mailer Boxes","Coloured Boxes","Universal Boxes","Flat Boxes","Tuck In Boxes","Pizza Boxes","Printed Corrugated Boxes","Long Boxes","Folder Boxes","Fruit Boxes","Reverse Tuck in Boxes","Mobile phone/Laptop/ Tablet Boxes","Heavy Duty Boxes","Storage Boxes","Special Tapes","Paper Tapes","Floor Marking Tape","Brown Tapes","Transparent Tapes","Printed Tapes","Cross Filament Tape","Coloured Tapes","Masking Tapes","Tissue Paper Tapes","Double Sided Tapes","EPE Foam Rolls","Strapping Rolls","Stretch Wrap Rolls","Bubble Wrap","Thermal (POS) Rolls","Shrink Wrap Rolls","Honeycomb Rolls","Rolls/Wraps/Films","Corrugated Rolls","Paper Bubble Rolls","Air Cushioning Rolls","biodegradable films and rolls"];
+    let bar=document.getElementById('navSuggestBar');
+    if(!bar){bar=document.createElement('div');bar.id='navSuggestBar';bar.className='fixed top-16 left-0 right-0 z-40';bar.innerHTML='<div class="max-w-7xl mx-auto px-6"><div id="navSuggestContent" class="hidden bg-white border border-neutral-200 rounded-xl shadow-lg overflow-hidden"></div></div>';document.body.appendChild(bar);}
+    const content=document.getElementById('navSuggestContent');
+    function linkFor(n){return `product-item.html?slug=${encodeURIComponent(toSlug(n))}`;}
+    function render(q){const list=names.filter(n=>n.toLowerCase().includes(q.toLowerCase())).slice(0,8);if(!q||list.length===0){content.classList.add('hidden');content.innerHTML='';return;}content.innerHTML=list.map(n=>`<a href="${linkFor(n)}" class="flex items-center justify-between px-4 py-2 hover:bg-neutral-100 text-sm text-neutral-800">${n}<span class="text-neutral-400">›</span></a>`).join('');content.classList.remove('hidden');}
+    s.addEventListener('input',e=>render(e.target.value));
+    document.addEventListener('click',(e)=>{if(!content.contains(e.target)&&e.target!==s)content.classList.add('hidden');});
+    s.addEventListener('keydown',(e)=>{if(e.key==='Escape')content.classList.add('hidden');});
+  })();
+</script>
