@@ -77,7 +77,7 @@
       if(!s)return;
       s.addEventListener('keydown',(e)=>{if(e.key==='Enter'){const v=s.value.trim();if(v)location.href=`product.html?q=${encodeURIComponent(v)}`;}});
       const toSlug = t=>t.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$|--+/g,'-');
-      const names=["Mailer Boxes","Coloured Boxes","Universal Boxes","Flat Boxes","Tuck In Boxes","Pizza Boxes","Printed Corrugated Boxes","Long Boxes","Folder Boxes","Fruit Boxes","Reverse Tuck in Boxes","Mobile phone/Laptop/ Tablet Boxes","Heavy Duty Boxes","Storage Boxes","Special Tapes","Paper Tapes","Floor Marking Tape","Brown Tapes","Transparent Tapes","Printed Tapes","Cross Filament Tape","Coloured Tapes","Masking Tapes","Tissue Paper Tapes","Double Sided Tapes","EPE Foam Rolls","Strapping Rolls","Stretch Wrap Rolls","Bubble Wrap","Thermal (POS) Rolls","Shrink Wrap Rolls","Honeycomb Rolls","Rolls/Wraps/Films","Corrugated Rolls","Paper Bubble Rolls","Air Cushioning Rolls","biodegradable films and rolls"];
+      const names=["Mailer Boxes","Coloured Boxes","Cap Boxes","Flat Boxes","Tuck In Boxes","Pizza Boxes","Printed Corrugated Boxes","Long Boxes","Folder Boxes","Universal Box","Available Corrugated Flutes","Corrugated Display Stand","Corrugated Pallet","Corrugated Separator","Mono Carton Boxes","Corrugated Partition","Corrugated Tray Box","Fruit Boxes","Reverse Tuck in Boxes","Mobile phone/Laptop/ Tablet Boxes","Heavy Duty Boxes","Storage Boxes","Special Tapes","Paper Tapes","Floor Marking Tape","Brown Tapes","Transparent Tapes","Printed Tapes","Cross Filament Tape","Coloured Tapes","Masking Tapes","Tissue Paper Tapes","Double Sided Tapes","EPE Foam Rolls","Strapping Rolls","Stretch Wrap Rolls","Bubble Wrap","Thermal (POS) Rolls","Shrink Wrap Rolls","Honeycomb Rolls","Rolls/Wraps/Films","Corrugated Rolls","Paper Bubble Rolls","Air Cushioning Rolls","biodegradable films and rolls"];
       let bar=document.getElementById('navSuggestBar');
       if(!bar){bar=document.createElement('div');bar.id='navSuggestBar';bar.className='fixed top-16 left-0 right-0 z-40';bar.innerHTML='<div class="max-w-7xl mx-auto px-6"><div id="navSuggestContent" class="hidden bg-white border border-neutral-200 rounded-xl shadow-lg overflow-hidden"></div></div>';document.body.appendChild(bar);}      
       const content=document.getElementById('navSuggestContent');
@@ -198,7 +198,7 @@
       </a>
 
       <a href="#" class="g-item group relative rounded-2xl overflow-hidden bg-white shadow-lg" data-cat="boxes">
-        <img src="images/universal-boxes.jpg" class="w-full h-72 object-cover">
+        <img src="images/Universal Boxes.jpg" class="w-full h-72 object-cover">
         <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition"></div>
         <div class="absolute bottom-4 left-4 right-4">
           <div class="g-caption">
@@ -256,8 +256,10 @@
 
   <script>
     const cat1=[
-      "Mailer Boxes","Coloured Boxes","Universal Boxes","Flat Boxes","Tuck In Boxes","Pizza Boxes",
-      "Printed Corrugated Boxes","Long Boxes","Folder Boxes","Fruit Boxes","Reverse Tuck in Boxes",
+      "Mailer Boxes","Coloured Boxes","Cap Boxes","Flat Boxes","Tuck In Boxes","Pizza Boxes",
+      "Printed Corrugated Boxes","Long Boxes","Folder Boxes","Universal Box","Available Corrugated Flutes",
+      "Corrugated Display Stand","Corrugated Pallet","Corrugated Separator","Mono Carton Boxes",
+      "Corrugated Partition","Corrugated Tray Box","Fruit Boxes","Reverse Tuck in Boxes",
       "Mobile phone/Laptop/ Tablet Boxes","Heavy Duty Boxes","Storage Boxes"
     ];
     const cat2=[
@@ -272,13 +274,21 @@
     const cat1Images={
       "Mailer Boxes":"images/Mailer boxes.jpg",
       "Coloured Boxes":"images/Coloured Boxes.jpg",
-      "Universal Boxes":"images/Universal Boxes.jpg",
+      "Cap Boxes":"images/Universal Boxes.jpg",
       "Flat Boxes":"images/Flat Boxes.jpg",
       "Tuck In Boxes":"images/Tuck In Boxes.jpg",
       "Pizza Boxes":"images/Pizza boxes.jpg",
       "Printed Corrugated Boxes":"images/Printed Corguted box.jpg",
       "Long Boxes":"images/long boxes.jpg",
       "Folder Boxes":"images/Folder Boxes.jpg",
+      "Universal Box":"images/Universal Box.jpg",
+      "Available Corrugated Flutes":"images/Available Corrugated Flutes.jpg",
+      "Corrugated Display Stand":"images/Corrugated Display Stand.jpg",
+      "Corrugated Pallet":"images/Corrugated Pallet.jpg",
+      "Corrugated Separator":"images/Corrugated Separator.jpg",
+      "Mono Carton Boxes":"images/Mono Carton Boxes.jpg",
+      "Corrugated Partition":"images/Corrugated Partition.jpg",
+      "Corrugated Tray Box":"images/Corrugated Tray Box.jpg",
       "Fruit Boxes":"images/Fruit boxes.jpg",
       "Reverse Tuck in Boxes":"images/Reverse Tuck In Boxes.jpg",
       "Mobile phone/Laptop/ Tablet Boxes":"images/mobile laptop tablet boxes.jpg",
