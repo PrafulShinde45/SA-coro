@@ -456,6 +456,133 @@
 
 
 
+<!-- OUR OFFICE, OUR ENERGY -->
+<section class="py-20 px-6 bg-white">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center">
+    
+    <!-- Left: Image Carousel -->
+    <div class="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3] group">
+      
+      <!-- Carousel Wrapper -->
+      <div id="officeCarousel" class="absolute inset-0 flex transition-transform duration-1000 ease-in-out">
+        <div class="w-full h-full flex-shrink-0 relative">
+          <img src="images/EKC_0011-HDR.jpg" class="w-full h-full object-cover" alt="SA Coro Office 1">
+          <div class="absolute inset-0 bg-black/20"></div>
+        </div>
+        <div class="w-full h-full flex-shrink-0 relative">
+          <img src="images/EKC_9835-HDR.jpg" class="w-full h-full object-cover" alt="SA Coro Office 2">
+          <div class="absolute inset-0 bg-black/20"></div>
+        </div>
+        <div class="w-full h-full flex-shrink-0 relative">
+          <img src="images/EKC_9955-HDR.jpg" class="w-full h-full object-cover" alt="SA Coro Office 3">
+          <div class="absolute inset-0 bg-black/20"></div>
+        </div>
+        <div class="w-full h-full flex-shrink-0 relative">
+          <img src="images/EKC_9995-HDR.jpg" class="w-full h-full object-cover" alt="SA Coro Office 4">
+          <div class="absolute inset-0 bg-black/20"></div>
+        </div>
+      </div>
+
+      <!-- Navigation Dots -->
+      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        <button class="w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white transition-all duration-300 office-dot active"></button>
+        <button class="w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white transition-all duration-300 office-dot"></button>
+        <button class="w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white transition-all duration-300 office-dot"></button>
+        <button class="w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white transition-all duration-300 office-dot"></button>
+      </div>
+
+    </div>
+
+    <!-- Right: Text Content -->
+    <div class="text-left space-y-8">
+      <div>
+        <h2 class="text-4xl md:text-5xl font-bold text-[#800000] mb-6">Our Office, Our Energy</h2>
+        <p class="text-gray-700 text-lg leading-relaxed">
+          At SA Coro Pack, our workspace reflects our values — precision, collaboration, and commitment to quality.
+        </p>
+      </div>
+
+      <div class="space-y-6">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0 text-[#800000]">
+            <i class="fas fa-lightbulb text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-gray-900">Where ideas turn into reliable packaging solutions</h3>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0 text-[#800000]">
+            <i class="fas fa-users text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-gray-900">Where teams collaborate with purpose</h3>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0 text-[#800000]">
+            <i class="fas fa-check-circle text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-gray-900">Where quality begins before production</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-6 border-t border-gray-100">
+        <p class="text-[#800000] font-semibold text-lg italic">
+          "This is where SA Coro Pack plans, innovates, and delivers excellence."
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  (function() {
+    const track = document.getElementById('officeCarousel');
+    const dots = document.querySelectorAll('.office-dot');
+    let current = 0;
+    const total = 4;
+    
+    function update() {
+      track.style.transform = `translateX(-${current * 100}%)`;
+      dots.forEach((d, i) => {
+        d.classList.toggle('bg-white', i === current);
+        d.classList.toggle('bg-white/50', i !== current);
+        d.classList.toggle('scale-125', i === current);
+      });
+    }
+
+    function next() {
+      current = (current + 1) % total;
+      update();
+    }
+
+    let interval = setInterval(next, 4000);
+
+    // Pause on hover
+    track.parentElement.addEventListener('mouseenter', () => clearInterval(interval));
+    track.parentElement.addEventListener('mouseleave', () => interval = setInterval(next, 4000));
+
+    // Dot click
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        current = index;
+        update();
+        clearInterval(interval);
+        interval = setInterval(next, 4000);
+      });
+    });
+    
+    // Initial state
+    update();
+  })();
+</script>
+
 <!-- OUR VISION & MISSION -->
 <section class="py-16 px-6 bg-white">
   <div class="max-w-7xl mx-auto">
